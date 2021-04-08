@@ -1,6 +1,6 @@
-# danger-plugin-template
+# danger-app_size_report
 
-An opinionated template for creating a Danger plugin with the following features:
+Danger Ruby plugin for reports about iOS app size:
 
 - Git as the source control management system.
 - Clean folder structure.
