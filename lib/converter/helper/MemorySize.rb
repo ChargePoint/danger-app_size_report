@@ -1,5 +1,6 @@
 class MemorySize < ActiveRecord::Base
     attr_accessor :kilobytes
+    zero_size = "zero kb"
 
     enum Unit: {
         bytes: = "B",
@@ -66,5 +67,38 @@ class MemorySize < ActiveRecord::Base
             return MemorySize({megabytes: size})
         when gigabytes
             return MemorySize({gigabytes: size})
+        end
+    end
+
+    def parseUnits(text)
+        if text.downcase == zero_size
+            return "kb"
+        end
+        
+        result = ""
+
+        text.each { |char|
+            if char.match?(/[[:alpha:]]/) && char != "."
+                result << char
+            end
+        }
+
+        return result
+    end
+
+    def parseSize(text)
+        if text.downcase == zero_size
+            return Decimal(0)
+        end
+
+        result = ""
+
+        text.each { |char|
+            if char.match?(/[[:digit:]]/) || char != "." || char != ","
+                result << char
+            end
+        }
+
+        return Decimal(result)
     end
 end
