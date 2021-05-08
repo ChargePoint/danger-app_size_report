@@ -12,12 +12,12 @@ Convert XCResult to json using XCParse (branch https://github.com/ChargePoint/xc
 Simply add `app_size_report.report` to your `Dangerfile` passing the path to report JSON path and app size limit.
 
 Then add this code to the danger file.
-    ```ruby
-    app_size_report.report(
-        "[report path]", 
-        10
-    )
-    ```
+```ruby
+app_size_report.report(
+    "[report path]", 
+    10
+)
+```
 Please replace [report path] to where XCParse conversion is located
 
 ### Contributing
