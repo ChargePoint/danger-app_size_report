@@ -1,48 +1,26 @@
 # danger-app_size_report
 
-<<<<<<< HEAD
-A description of danger-app_size_report.
+Danger-app_size_report. A danger plugin for reporting app sizes.
 
 ## Installation
-
-    $ gem install danger-app_size_report
-
-## Usage
-
-    Methods and attributes from this plugin are available in
-    your `Dangerfile` under the `app_size_report` namespace.
-
-## Development
-
-1. Clone this repo
-2. Run `bundle install` to setup dependencies.
-3. Run `bundle exec rake spec` to run the tests.
-4. Use `bundle exec guard` to automatically have tests run as you make changes.
-5. Make your changes.
-=======
-Danger Ruby plugin for reports about iOS app size:
-
-- Git as the source control management system.
-- Clean folder structure.
-- MIT license.
-- Rake as task management tool.
+put `gem danger-app_size_report` to your project 'Gemfile'
 
 ## Usage
 
-    $ ./configure danger-foo
+Convert XCResult to json using XCParse (branch https://github.com/ChargePoint/xcparse/pull/57)
 
-It will generate a Danger plugin, which will expose your plugin via a `foo` variable
-in your Dangerfile
+Simply add `app_size_report.report` to your `Dangerfile` passing the path to report JSON path and app size limit.
 
-## Going from there
+Then add this code to the danger file.
+    ```ruby
+    app_size_report.report(
+        "[report path]", 
+        10
+    )
+    ```
+Please replace [report path] to where XCParse conversion is located
 
-- Add descriptions to the Gem specification, README and command itself
-- Implement your plugin, documentation is available at http://danger.systems
-
-## Getting it in the Danger.Systems plugin index
-
-- Set a correct homepage in the Gem specification
-- Ensure that your plugin passes `danger plugins lint`
-- Create a Merge Request to add your plugin to the list of known plugins in
-  `https://gitlab.com/danger-systems/danger.systems/blob/master/plugins.json`, it only needs your Gem's name.
->>>>>>> main
+### Contributing
+If you like what you see and willing to support the work, you could:
+- Open an [issue](https://github.com/ChargePoint/danger-app_size_report/issues/new)
+- Contribute code, and pull requests.
