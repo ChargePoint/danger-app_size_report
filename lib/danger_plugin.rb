@@ -1,1 +1,1 @@
-require "${PLUGIN_FILE}/plugin"
+require "app_size_report/plugin"

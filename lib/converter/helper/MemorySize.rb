@@ -1,104 +1,119 @@
-class MemorySize < ActiveRecord::Base
+require_relative '../helper/JSONConverter'
+class MemorySize < JSONConverter
     attr_accessor :kilobytes
-    zero_size = "zero kb"
+    ZERO_SIZE = "zero kb"
 
-    enum Unit: {
-        bytes: = "B",
-        kilobytes: = "KB",
-        megabytes: = "MB",
-        gigabytes: = "GB",
-    }
+    UNIT = {
+        :bytes => "B",
+        :kilobytes => "KB",
+        :megabytes => "MB",
+        :gigabytes => "GB",
+    }.freeze
 
-    def bytes
-        return kilobytes * 1024
+    def bytes 
+        return @kilobytes * 1024
     end
 
     def megabytes
-        return kilobytes / 1024
-    end
+        return @kilobytes / 1024
+    end 
 
     def gigabytes
-        return self.megabytes / 1024
+        return @kilobytes / 1024 / 1024
+    end 
+
+    def initialize(text)
+        value = parseFrom(text)
+
+        if (value)
+            @kilobytes = value
+        else
+            @kilobytes = 0
+        end
     end
 
-    def initialiaze(args)
-        if args.has_key? "bytes"
-            @kilobytes = bytes / 1024
-        end
-
-        if args.has_key? "megabytes"
-            @kilobytes = bytes * 1024
-        end
-                
-        if args.has_key? "gigabytes"
-            @kilobytes = bytes * 1024 * 1024
-        end
-    end
+    private
 
     def parseFrom(text)
         textToMemoryUnit = {
-            "b" => .bytes,
-            "byte" => .bytes,
-            "bytes" => .bytes,
-            "kb" => .kilobytes,
-            "kilobyte" => .kilobytes,
-            "kilobytes" => .kilobytes,
-            "mb" => .megabytes,
-            "megabyte" => .megabytes,
-            "megabytes" => .megabytes,
-            "gb" => .gigabytes,
-            "gigabyte" => .gigabytes,
-            "gigabytes" => .gigabytes
+            "b" => :bytes,
+            "byte" => :bytes,
+            "bytes" => :bytes,
+            "kb" => :kilobytes,
+            "kilobyte" => :kilobytes,
+            "kilobytes" => :kilobytes,
+            "mb" => :megabytes,
+            "megabyte" => :megabytes,
+            "megabytes" => :megabytes,
+            "gb" => :gigabytes,
+            "gigabyte" => :gigabytes,
+            "gigabytes" => :gigabytes
         }
 
-        if textToMemoryUnit[parseUnits(text: text)] == null || parseSize(text: text) == null 
+        unit = textToMemoryUnit[parseUnits(text)]
+        size = parseSize(text)
+        
+        if (!size)
             return nil
         end
         
-        unit = textToMemoryUnit[parseUnits(text: text)]
-        size = parseSize(text: text)
-
+        if (!unit)
+            unit = :megabytes
+        end
+        
         case unit
-        when bytes
-            return MemorySize({bytes: size})
-        when kilobytes
-            return MemorySize({kilobytes: size})
-        when megabytes
-            return MemorySize({megabytes: size})
-        when gigabytes
-            return MemorySize({gigabytes: size})
+        when :bytes
+            return kilobytesFromBytes(size)
+        when :kilobytes
+            return size
+        when :megabytes
+            return kilobytesFromMegabytes(size)
+        when :gigabytes
+            return kilobytesFromGigabytes(size)
         end
     end
-
+    
     def parseUnits(text)
-        if text.downcase == zero_size
+        if text.downcase == ZERO_SIZE
             return "kb"
         end
         
         result = ""
 
-        text.each { |char|
-            if char.match?(/[[:alpha:]]/) && char != "."
+        text.each_char { |char|
+            if char.match?(/[[:alpha:]]/) && char != "." && char != ","
                 result << char
             end
         }
-
-        return result
+        
+        return result.downcase
     end
 
     def parseSize(text)
-        if text.downcase == zero_size
-            return Decimal(0)
+        if text.downcase == ZERO_SIZE
+            return 0.to_f
         end
 
         result = ""
 
-        text.each { |char|
-            if char.match?(/[[:digit:]]/) || char != "." || char != ","
+        text.each_char { |char|
+            if char.match?(/[[:digit:]]/) || char == "." || char == ","
                 result << char
             end
         }
+       
+        return result.to_f
+    end
 
-        return Decimal(result)
+    def kilobytesFromBytes (bytes)
+        return bytes / 1024
+    end
+
+    def kilobytesFromMegabytes (megabytes)
+        return megabytes * 1024
+    end
+
+    def kilobytesFromGigabytes (gigabytes)
+        return gigabytes * 1024 * 1024
     end
 end
