@@ -13,6 +13,7 @@ A [Danger](https://github.com/danger/danger) plugin that reports size violations
 Report app size violations given a valid App Thinning Size Report.
 
     // Dangerfile
+
     report_path = "/Path/to/AppSizeReport.txt"
     app_size_report.flag_violations(
         report_path, 
@@ -37,6 +38,7 @@ Report app size violations given a valid App Thinning Size Report.
 Returns a JSON string representation of the given App Thinning Size Report.
 
     // Dangerfile
+    
     report_path = "/Path/to/AppSizeReport.txt"
     app_size_json = app_size_report.report_json(report_path)
 
