@@ -30,8 +30,8 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'rspec', '~> 3.4'
 
   # Linting code and docs
-  spec.add_development_dependency 'rubocop'
-  spec.add_development_dependency 'yard'
+  spec.add_development_dependency 'rubocop', '~> 1.25.0'
+  spec.add_development_dependency 'yard', '~> 0.9.27'
 
   # Makes testing easy via `bundle exec guard`
   spec.add_development_dependency 'guard', '~> 2.14'
@@ -47,5 +47,5 @@ Gem::Specification.new do |spec|
   #    binding.pry
   #
   # This will stop test execution and let you inspect the results
-  spec.add_development_dependency 'pry'
+  spec.add_development_dependency 'pry', '~> 0.14.1'
 end

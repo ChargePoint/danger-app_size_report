@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    danger-app_size_report (0.0.1)
+    danger-app_size_report (0.0.2)
       danger-plugin-api (~> 1.0)
 
 GEM
@@ -160,11 +160,11 @@ DEPENDENCIES
   guard (~> 2.14)
   guard-rspec (~> 4.7)
   listen (= 3.0.7)
-  pry
+  pry (~> 0.14.1)
   rake (~> 10.0)
   rspec (~> 3.4)
-  rubocop
-  yard
+  rubocop (~> 1.25.0)
+  yard (~> 0.9.27)
 
 BUNDLED WITH
    2.3.6

@@ -1,30 +1,78 @@
 # frozen_string_literal: false
 
 module Danger
-  # This is your plugin class. Any attributes or methods you expose here will
-  # be available from within your Dangerfile.
-  #
-  # To be published on the Danger plugins site, you will need to have
-  # the public interface documented. Danger uses [YARD](http://yardoc.org/)
-  # for generating documentation from your plugin source, and you can verify
-  # by running `danger plugins lint` or `bundle exec rake spec`.
-  #
-  # You should replace these comments with a public description of your library.
-  #
-  # @example Ensure people are well warned about merging on Mondays
-  #
-  #          my_plugin.warn_on_mondays
-  #
-  # @see  Rishab Sukumar/danger-app_size_report
-  # @tags monday, weekends, time, rattata
-  #
   require 'json'
   require_relative '../converter/parser/report_parser'
   require_relative '../converter/helper/memory_size'
 
+  # A Danger plugin for reporting iOS app size violations. 
+  # A valid App Thinning Size Report must be passed to the plugin 
+  # for accurate functionality.
+  #
+  # @example Report app size violations if one or more App variants
+  # exceed 4GB.
+  # 
+  #          report_path = "/Path/to/AppSize/Report.txt"
+  #          app_size_report.flag_violations(
+  #             report_path,
+  #             build_type: 'App',
+  #             size_limit: 4,
+  #             limit_unit: 'GB',
+  #             fail_on_warning: false
+  #          )
+  #
+  # @example Report app size violations if one or more App Clip variants
+  # exceed 8MB.
+  # 
+  #          report_path = "/Path/to/AppSize/Report.txt"
+  #          app_size_report.flag_violations(
+  #             report_path,
+  #             build_type: 'Clip',
+  #             size_limit: 8,
+  #             limit_unit: 'MB',
+  #             fail_on_warning: false
+  #          )
+  #
+  # @example Fail PR if one or more App Clip variants exceed 8MB.
+  # 
+  #          report_path = "/Path/to/AppSize/Report.txt"
+  #          app_size_report.flag_violations(
+  #             report_path,
+  #             build_type: 'Clip',
+  #             size_limit: 8,
+  #             limit_unit: 'MB',
+  #             fail_on_warning: true
+  #          )
+  #
+  # @example Get JSON string representation of app thinning size report
+  # 
+  #          report_path = "/Path/to/AppSize/Report.txt"
+  #          app_size_json = app_size_report.report_json(report_path)
+  #             
+  # @see  ChargePoint/danger-app_size_report
+  # @tags ios, xcode, appclip, thinning, size 
+  #
   class DangerAppSizeReport < Plugin
-    # A method that you can call from your Dangerfile
-    # @return   [Array<String>]
+    # Reports app size violations given a valid App Thinning Size Report.
+    # @param [String, required] report_path
+    #        Path to valid App Thinning Size Report text file.
+    # @param [String, optional] build_type
+    #        Specify whether the report corresponds to an App or an App Clip.
+    #        Default: 'App'
+    #        Supported values: 'App', 'Clip'
+    # @param [Numeric, optional] size_limit
+    #        Specify the app size limit.
+    #        Default: 4
+    # @param [String, optional] limit_unit
+    #        Specific the unit for the given size limit.
+    #        Default: 'GB'
+    #        Supported values: 'KB', 'MB', 'GB'
+    # @param [Boolean, optional] fail_on_warning
+    #        Specify whether the PR should fail if one or more app variants
+    #        exceed the given size limit. By default, the plugin issues
+    #        a warning in this case.
+    #        Default: 'false'
+    # @return   [void]
     #
     def flag_violations(report_path, build_type: 'App', size_limit: 4, limit_unit: 'GB', fail_on_warning: false)
       report_text = File.read(report_path)
@@ -50,6 +98,11 @@ module Danger
       generate_ads_label_markdown
     end
 
+    # Returns a JSON string representation of the given App Thinning Size Report.
+    # @param [String, required] report_path
+    #        Path to valid App Thinning Size Report text file.
+    # @return   [String]
+    #
     def report_json(report_path)
       report_text = File.read(report_path)
       variants = ReportParser.parse(report_text)
