@@ -36,10 +36,10 @@ class AppSizeParser < ModelParser
 
       if compressed_string && uncompressed_string && compressed_value && uncompressed_value
         compressed_raw_value = compressed_string.downcase == MemorySize::ZERO_SIZE ? '0 KB' : compressed_string
-        compressed = SizeModel.new(compressed_raw_value, compressed_value, @standardized_unit)
+        compressed_size = SizeModel.new(compressed_raw_value, compressed_value, @standardized_unit)
         uncompressed_raw_value = uncompressed_string.downcase == MemorySize::ZERO_SIZE ? '0 KB' : uncompressed_string
-        uncompressed = SizeModel.new(uncompressed_raw_value, uncompressed_value, @standardized_unit)
-        @result = AppSizeModel.new(compressed:, uncompressed:)
+        uncompressed_size = SizeModel.new(uncompressed_raw_value, uncompressed_value, @standardized_unit)
+        @result = AppSizeModel.new(compressed: compressed_size, uncompressed: uncompressed_size)
       else
         @result = AppSizeModel.new
       end

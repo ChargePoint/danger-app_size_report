@@ -5,13 +5,13 @@ module Danger
   require_relative '../converter/parser/report_parser'
   require_relative '../converter/helper/memory_size'
 
-  # A Danger plugin for reporting iOS app size violations. 
-  # A valid App Thinning Size Report must be passed to the plugin 
+  # A Danger plugin for reporting iOS app size violations.
+  # A valid App Thinning Size Report must be passed to the plugin
   # for accurate functionality.
   #
   # @example Report app size violations if one or more App variants
   # exceed 4GB.
-  # 
+  #
   #          report_path = "/Path/to/AppSize/Report.txt"
   #          app_size_report.flag_violations(
   #             report_path,
@@ -23,7 +23,7 @@ module Danger
   #
   # @example Report app size violations if one or more App Clip variants
   # exceed 8MB.
-  # 
+  #
   #          report_path = "/Path/to/AppSize/Report.txt"
   #          app_size_report.flag_violations(
   #             report_path,
@@ -34,7 +34,7 @@ module Danger
   #          )
   #
   # @example Fail PR if one or more App Clip variants exceed 8MB.
-  # 
+  #
   #          report_path = "/Path/to/AppSize/Report.txt"
   #          app_size_report.flag_violations(
   #             report_path,
@@ -45,12 +45,12 @@ module Danger
   #          )
   #
   # @example Get JSON string representation of app thinning size report
-  # 
+  #
   #          report_path = "/Path/to/AppSize/Report.txt"
   #          app_size_json = app_size_report.report_json(report_path)
-  #             
+  #
   # @see  ChargePoint/danger-app_size_report
-  # @tags ios, xcode, appclip, thinning, size 
+  # @tags ios, xcode, appclip, thinning, size
   #
   class DangerAppSizeReport < Plugin
     # Reports app size violations given a valid App Thinning Size Report.
