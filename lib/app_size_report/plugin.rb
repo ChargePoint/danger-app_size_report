@@ -178,7 +178,7 @@ module Danger
     end
 
     def generate_ads_label_markdown
-      ads_label = 'Powered by [danger-app_size_report](https://github.com/ChargePoint)'
+      ads_label = 'Powered by [danger-app_size_report](https://github.com/ChargePoint/danger-app_size_report)'
       markdown ads_label
     end
   end
