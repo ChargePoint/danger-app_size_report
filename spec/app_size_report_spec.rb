@@ -1,46 +1,37 @@
-require File.expand_path("../spec_helper", __FILE__)
+# frozen_string_literal: false
+
+require File.expand_path('spec_helper', __dir__)
 
 module Danger
   describe Danger::DangerAppSizeReport do
-    it "should be a plugin" do
+    it 'should be a plugin' do
       expect(Danger::DangerAppSizeReport.new(nil)).to be_a Danger::Plugin
     end
 
-    #
-    # You should test your custom attributes and methods here
-    #
-    describe "with Dangerfile" do
+    describe 'with Dangerfile' do
       before do
         @dangerfile = testing_dangerfile
-        @my_plugin = @dangerfile.app_size_report
-
-        # mock the PR data
-        # you can then use this, eg. github.pr_author, later in the spec
-        json = File.read(File.dirname(__FILE__) + '/support/fixtures/github_pr.json') # example json: `curl https://api.github.com/repos/danger/danger-plugin-template/pulls/18 > github_pr.json`
-        allow(@my_plugin.github).to receive(:pr_json).and_return(json)
+        @app_size_report = @dangerfile.app_size_report
       end
 
-      # Some examples for writing tests
-      # You should replace these with your own.
+      it 'Converts App Size Report to JSON' do
+        json_string = @app_size_report.report_json("#{File.dirname(__dir__)}/Resources/App\ Thinning\ Size\ Report.txt")
 
-      it "Warns on a monday" do
-        monday_date = Date.parse("2016-07-11")
-        allow(Date).to receive(:today).and_return monday_date
+        expected_json = File.read("#{File.dirname(__dir__)}/Resources/expectedReportJSON.json")
 
-        @my_plugin.warn_on_mondays
-
-        expect(@dangerfile.status_report[:warnings]).to eq(["Trying to merge code on a Monday"])
+        expect(json_string).to eq(expected_json)
       end
 
-      it "Does nothing on a tuesday" do
-        monday_date = Date.parse("2016-07-12")
-        allow(Date).to receive(:today).and_return monday_date
+      it 'Generates App Size Danger Report' do
+        @app_size_report.flag_violations(
+          "#{File.dirname(__dir__)}/Resources/App\ Thinning\ Size\ Report.txt",
+          build_type: 'Clip',
+          size_limit: 12,
+          limit_unit: 'MB'
+        )
 
-        @my_plugin.warn_on_mondays
-
-        expect(@dangerfile.status_report[:warnings]).to eq([])
+        expect(@dangerfile.status_report[:warnings]).to eq(['The size limit of 10 MB has been exceeded by one or more variants'])
       end
-
     end
   end
 end

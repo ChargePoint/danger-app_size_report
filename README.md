@@ -1,25 +1,55 @@
 # danger-app_size_report
 
-Danger-app_size_report. A danger plugin for reporting app sizes.
+A [Danger](https://github.com/danger/danger) plugin for reporting iOS app size violations. A valid [App Thinning Size Report](https://developer.apple.com/documentation/xcode/reducing-your-app-s-size) must be passed to the plugin for accurate functionality.
 
 ## Installation
-put `gem danger-app_size_report` to your project 'Gemfile'
+
+    $ gem install danger-app_size_report
 
 ## Usage
 
-Convert XCResult to json using XCParse (branch https://github.com/ChargePoint/xcparse/pull/57)
+### `flag_violations`
 
-Simply add `app_size_report.report` to your `Dangerfile` passing the path to report JSON path and app size limit.
+Report app size violations given a valid App Thinning Size Report.
 
-```ruby
-app_size_report.report(
-    "[report path]", 
-    10
-)
-```
-Please replace [report path] to where XCParse conversion is located
+    // Dangerfile
 
-### Contributing
-If you like what you see and willing to support the work, you could:
-- Open an [issue](https://github.com/ChargePoint/danger-app_size_report/issues/new)
-- Contribute code, and pull requests.
+    report_path = "/Path/to/AppSizeReport.txt"
+    app_size_report.flag_violations(
+        report_path, 
+        build_type: 'App', 
+        size_limit: 4, 
+        limit_unit: 'GB', 
+        fail_on_warning: false
+    )
+
+#### Parameters
+
+- `report_path` [String, required] Path to valid App Thinning Size Report text file.
+- `build_type` [String, optional] [Default: 'App'] Specify whether the report corresponds to an App or an App Clip. 
+  - Supported values: 'App', 'Clip'
+- `size_limit` [Numeric, optional] [Default: 4] Specify the app size limit. 
+- `limit_unit` [String, optional] [Default: 'GB'] Specific the unit for the given size limit.
+  - Supported values: 'KB', 'MB', 'GB'
+- `fail_on_warning` [Boolean, optional] [Default: false] Specify whether the PR should fail if one or more app variants exceed the given size limit. By default, the plugin issues a warning in this case. 
+
+### `report_json`
+
+Returns a JSON string representation of the given App Thinning Size Report.
+
+    // Dangerfile
+
+    report_path = "/Path/to/AppSizeReport.txt"
+    app_size_json = app_size_report.report_json(report_path)
+
+#### Parameters
+
+- `report_path` [String, required] Path to valid App Thinning Size Report text file.
+
+## Development
+
+1. Clone this repo
+2. Run `bundle install` to setup dependencies.
+3. Run `bundle exec rake spec` to run the tests.
+4. Use `bundle exec guard` to automatically have tests run as you make changes.
+5. Make your changes.
