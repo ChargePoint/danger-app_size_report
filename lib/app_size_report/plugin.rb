@@ -98,6 +98,10 @@ module Danger
       generate_ads_label_markdown
     end
 
+    def flag_violations()
+      markdown "## Test Markdown"
+    end
+
     # Returns a JSON string representation of the given App Thinning Size Report.
     # @param [String, required] report_path
     #        Path to valid App Thinning Size Report text file.
