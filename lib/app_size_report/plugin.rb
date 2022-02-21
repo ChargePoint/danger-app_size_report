@@ -236,10 +236,12 @@ module Danger
         variants_limit = sorted_sizes.length
       end
 
-      objects[0..(variants_limit-1)].each do |idx|
-        variant = sorted_sizes[idx]
+      counter = 0
+      while(counter < variants_limit)
+        variant = sorted_sizes[counter]
         is_violating = variant.max >= limit_size.bytes ? '❌' : '✅'
         size_report << "#{is_violating} | #{variant.sdk} | #{variant.abi} | #{variant.screeen_density} | #{variant.language} | #{variant.max} |\n"
+        counter+=1
       end
 
       markdown size_report
