@@ -15,7 +15,7 @@ module Danger
   $size_csv_path = "#{$temp_path}/output.csv"
   $bundletool_path = "#{$temp_path}/bundletool.jar"
   $bundletool_version = "1.8.2"
-  $variants_limit = 20
+  $variants_limit = 30
 
   $default_screen_densities = ["MDPI", "HDPI", "XHDPI", "XXHDPI", "XXXHDPI"]
   $default_languages = ["en"]
