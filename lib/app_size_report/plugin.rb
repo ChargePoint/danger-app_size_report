@@ -178,7 +178,7 @@ module Danger
 
       clean_temp!
 
-      generate_android_size_report_markdown(sorted_sizes, build_type, size_limit, limit_unit, fail_on_warning, @variants_limit)
+      generate_android_size_report_markdown(sorted_sizes, build_type, size_limit, limit_unit, fail_on_warning, $variants_limit)
     end
 
     def create_temp_dir()
