@@ -166,7 +166,7 @@ module Danger
 
       create_temp_dir
 
-      unless AndroidUtils.download_bundletool(@bundletool_version, @bundletool_path))
+      unless AndroidUtils.download_bundletool(@bundletool_version, @bundletool_path)
         clean_temp!
         return
       end
