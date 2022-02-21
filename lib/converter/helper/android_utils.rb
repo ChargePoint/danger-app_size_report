@@ -9,15 +9,15 @@ class AndroidUtils
         CSV.foreach(path, headers: true) { |row|
             sdk = row[AndroidVariant::PARSING_KEYS[:sdk]]
             abi = row[AndroidVariant::PARSING_KEYS[:abi]]
-            screeen_density = row[AndroidVariant::PARSING_KEYS[:screen_density]]
+            screen_density = row[AndroidVariant::PARSING_KEYS[:screen_density]]
             language = row[AndroidVariant::PARSING_KEYS[:language]]
             texture_compression_format = row[AndroidVariant::PARSING_KEYS[:texture_compression_format]]
             device_tire = row[AndroidVariant::PARSING_KEYS[:device_tire]]
             min = row[AndroidVariant::PARSING_KEYS[:min]]
             max = row[AndroidVariant::PARSING_KEYS[:max]]
             
-            if (screen_densities.include? screeen_density and languages.include? language)
-                filtered_sizes << AndroidVariant.new(sdk, abi, screeen_density, language, texture_compression_format, device_tire, min, max)
+            if (screen_densities.include? screen_density and languages.include? language)
+                filtered_sizes << AndroidVariant.new(sdk, abi, screen_density, language, texture_compression_format, device_tire, min, max)
             end
         }
         filtered_sizes

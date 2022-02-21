@@ -240,7 +240,7 @@ module Danger
       while(counter < variants_limit)
         variant = sorted_sizes[counter]
         is_violating = variant.max >= limit_size.bytes ? '❌' : '✅'
-        size_report << "#{is_violating} | #{variant.sdk} | #{variant.abi} | #{variant.screeen_density} | #{variant.language} | #{variant.max} |\n"
+        size_report << "#{is_violating} | #{variant.sdk} | #{variant.abi} | #{variant.screen_density} | #{variant.language} | #{variant.max} |\n"
         counter+=1
       end
 
