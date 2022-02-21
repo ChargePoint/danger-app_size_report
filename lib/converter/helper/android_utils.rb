@@ -31,7 +31,7 @@ class AndroidUtils
         lb = -1; ub = sortedArr.length
         while ub - lb > 1
             mid = (lb + ub) / 2
-            if sortedArr[mid] <= limit
+            if sortedArr[mid].max <= limit
                 ub = mid
             else
                 lb = mid
