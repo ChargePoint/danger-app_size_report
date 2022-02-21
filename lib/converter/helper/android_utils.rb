@@ -4,7 +4,7 @@ require 'open3'
 require_relative '../models/android_variant_model'
 
 class AndroidUtils 
-    def self.filter_estimated_sizes(path)
+    def self.filter_estimated_sizes(path, screen_densities, languages)
         filtered_sizes = []
         CSV.foreach(path, headers: true) { |row|
             sdk = row[AndroidVariant::PARSING_KEYS[:sdk]]
@@ -16,7 +16,7 @@ class AndroidUtils
             min = row[AndroidVariant::PARSING_KEYS[:min]]
             max = row[AndroidVariant::PARSING_KEYS[:max]]
             
-            if (@screen_densities.include? screeen_density and @languages.include? language )
+            if (screen_densities.include? screeen_density and languages.include? language)
                 filtered_sizes << AndroidVariant.new(sdk, abi, screeen_density, language, texture_compression_format, device_tire, min, max)
             end
         }

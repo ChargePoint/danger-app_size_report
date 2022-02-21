@@ -173,7 +173,7 @@ module Danger
 
       AndroidUtils.generate_apks(aab_path, ks_path, ks_alias, ks_password, build_type, $apks_path, $bundletool_path) # TODO: add key alias password
       AndroidUtils.generate_estimated_sizes($apks_path, $size_csv_path, $bundletool_path)
-      filtered_sizes = AndroidUtils.filter_estimated_sizes($size_csv_path)
+      filtered_sizes = AndroidUtils.filter_estimated_sizes($size_csv_path, screen_densities, languages)
       sorted_sizes = AndroidUtils.sort_estimated_sizes(filtered_sizes)
 
       clean_temp!
