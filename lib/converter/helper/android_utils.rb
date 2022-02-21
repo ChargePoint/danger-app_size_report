@@ -31,17 +31,20 @@ class AndroidUtils
         lb = -1; ub = sortedArr.length
         while ub - lb > 1
             mid = (lb + ub) / 2
-            if sortedArr[mid].max >= limit
-                lb = mid
-            else
+            if sortedArr[mid] <= limit
                 ub = mid
+            else
+                lb = mid
             end
+        end
+        if(ub == -1) 
+            return 0
         end
         ub
     end
 
-    def self.generate_apks(aab_path, ks_path, ks_alias, ks_password, build_type, apks_path, bundletool_path) # TODO: add key alias password
-        keystore_params = "--ks=\"#{ks_path}\" --ks-key-alias=\"#{ks_alias}\" --ks-pass=\"pass:#{ks_password}\""
+    def self.generate_apks(aab_path, ks_path, ks_alias, ks_password, ks_alias_password, build_type, apks_path, bundletool_path) 
+        keystore_params = "--ks=\"#{ks_path}\" --ks-key-alias=\"#{ks_alias}\" --ks-pass=\"pass:#{ks_password}\" --key-pass=\"pass:#{ks_alias_password}\""
         cmd = "java -jar #{bundletool_path} build-apks --bundle=\"#{aab_path}\" --output=\"#{apks_path}\" #{keystore_params}"
         if(build_type == "Instant") 
             cmd += " --instant"

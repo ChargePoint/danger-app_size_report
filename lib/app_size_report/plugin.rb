@@ -148,7 +148,7 @@ module Danger
     # @return   [void]
     #
 
-    def flag_violations(aab_path, ks_path, ks_alias, ks_password, screen_densities: $default_screen_densities, languages: $default_languages, build_type: 'App', size_limit: 150, limit_unit: 'MB', fail_on_warning: false)
+    def flag_violations(aab_path, ks_path, ks_alias, ks_password, ks_alias_password, screen_densities: $default_screen_densities, languages: $default_languages, build_type: 'App', size_limit: 150, limit_unit: 'MB', fail_on_warning: false)
       unless %w[App Instant].include? build_type
         raise ArgumentError, "The 'build_type' argument only accepts the values \"App\" and \"Instant\""
       end
@@ -171,7 +171,7 @@ module Danger
         return
       end
 
-      AndroidUtils.generate_apks(aab_path, ks_path, ks_alias, ks_password, build_type, $apks_path, $bundletool_path) # TODO: add key alias password
+      AndroidUtils.generate_apks(aab_path, ks_path, ks_alias, ks_password, ks_alias_password, build_type, $apks_path, $bundletool_path) 
       AndroidUtils.generate_estimated_sizes($apks_path, $size_csv_path, $bundletool_path)
       filtered_sizes = AndroidUtils.filter_estimated_sizes($size_csv_path, screen_densities, languages)
       sorted_sizes = AndroidUtils.sort_estimated_sizes(filtered_sizes)
