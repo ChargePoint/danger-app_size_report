@@ -9,6 +9,17 @@ module Danger
   require_relative '../converter/helper/memory_size'
   require_relative '../converter/helper/android_utils'
 
+  $project_root = Dir.pwd
+  $temp_path = "#{$project_root}/temp"
+  $apks_path = "#{$temp_path}/output.apks"
+  $size_csv_path = "#{$temp_path}/output.csv"
+  $bundletool_path = "#{$temp_path}/bundletool.jar"
+  $bundletool_version = "1.8.2"
+  $variants_limit = 20
+
+  $default_screen_densities = ["MDPI", "HDPI", "XHDPI", "XXHDPI", "XXXHDPI"]
+  $default_languages = ["en"]
+
   # A Danger plugin for reporting iOS app size violations.
   # A valid App Thinning Size Report must be passed to the plugin
   # for accurate functionality.
@@ -57,17 +68,6 @@ module Danger
   # @tags ios, xcode, appclip, thinning, size
   #
   class DangerAppSizeReport < Plugin
-    @project_root = Dir.pwd
-    @temp_path = "#{@project_root}/temp"
-    @apks_path = "#{@temp_path}/output.apks"
-    @size_csv_path = "#{@temp_path}/output.csv"
-    @bundletool_path = "#{@temp_path}/bundletool.jar"
-    @bundletool_version = "1.8.2"
-    @variants_limit = 20
-
-    @default_screen_densities = ["MDPI", "HDPI", "XHDPI", "XXHDPI", "XXXHDPI"]
-    @default_languages = ["en"]
-
     # Reports IOS app size violations given a valid App Thinning Size Report.
     # @param [String, required] report_path
     #        Path to valid App Thinning Size Report text file.
@@ -148,7 +148,7 @@ module Danger
     # @return   [void]
     #
 
-    def flag_violations(aab_path, ks_path, ks_alias, ks_password, screen_densities: @default_screen_densities, languages: @default_languages, build_type: 'App', size_limit: 150, limit_unit: 'MB', fail_on_warning: false)
+    def flag_violations(aab_path, ks_path, ks_alias, ks_password, screen_densities: $default_screen_densities, languages: $default_languages, build_type: 'App', size_limit: 150, limit_unit: 'MB', fail_on_warning: false)
       unless %w[App Instant].include? build_type
         raise ArgumentError, "The 'build_type' argument only accepts the values \"App\" and \"Instant\""
       end
@@ -166,14 +166,14 @@ module Danger
 
       create_temp_dir
 
-      unless AndroidUtils.download_bundletool(@bundletool_version, @bundletool_path)
+      unless AndroidUtils.download_bundletool($bundletool_version, $bundletool_path)
         clean_temp!
         return
       end
 
-      AndroidUtils.generate_apks(aab_path, ks_path, ks_alias, ks_password, build_type, @apks_path, @bundletool_path) # TODO: add key alias password
-      AndroidUtils.generate_estimated_sizes(@apks_path, @size_csv_path, @bundletool_path)
-      filtered_sizes = AndroidUtils.filter_estimated_sizes(@size_csv_path)
+      AndroidUtils.generate_apks(aab_path, ks_path, ks_alias, ks_password, build_type, $apks_path, $bundletool_path) # TODO: add key alias password
+      AndroidUtils.generate_estimated_sizes($apks_path, $size_csv_path, $bundletool_path)
+      filtered_sizes = AndroidUtils.filter_estimated_sizes($size_csv_path)
       sorted_sizes = AndroidUtils.sort_estimated_sizes(filtered_sizes)
 
       clean_temp!
@@ -182,11 +182,11 @@ module Danger
     end
 
     def create_temp_dir()
-      Dir.mkdir @temp_path
+      Dir.mkdir $temp_path
     end
 
     def clean_temp!()
-      FileUtils.rm_rf(@temp_path)
+      FileUtils.rm_rf($temp_path)
     end
 
     # Returns a JSON string representation of the given App Thinning Size Report.
@@ -236,7 +236,7 @@ module Danger
         variants_limit = sorted_sizes.length
       end
 
-      objects[0..(variants_limit-1)].each do idx 
+      objects[0..(variants_limit-1)].each do |idx|
         variant = sorted_sizes[idx]
         is_violating = variant.max >= limit_size.bytes ? '❌' : '✅'
         size_report << "#{is_violating} | #{variant.sdk} | #{variant.abi} | #{variant.screeen_density} | #{variant.language} | #{variant.max} |\n"
