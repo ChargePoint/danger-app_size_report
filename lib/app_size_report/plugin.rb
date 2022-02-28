@@ -171,8 +171,8 @@ module Danger
         return
       end
 
-      AndroidUtils.generate_apks(aab_path, ks_path, ks_alias, ks_password, ks_alias_password, build_type, $apks_path, $bundletool_path) 
-      AndroidUtils.generate_estimated_sizes($apks_path, $size_csv_path, $bundletool_path)
+      AndroidUtils.generate_apks(aab_path, ks_path, ks_alias, ks_password, ks_alias_password, $apks_path, $bundletool_path) 
+      AndroidUtils.generate_estimated_sizes($apks_path, $size_csv_path, $bundletool_path, build_type)
       filtered_sizes = AndroidUtils.filter_estimated_sizes($size_csv_path, screen_densities, languages)
       sorted_sizes = AndroidUtils.sort_estimated_sizes(filtered_sizes)
 

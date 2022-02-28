@@ -35,8 +35,19 @@ module Danger
 
       it 'Generates Android App Size Danger Report' do
         @app_size_report.flag_android_violations(
-          "#{File.dirname(__dir__)}/"
+          "#{File.dirname(__dir__)}/Resources/app.aab",
+          "#{File.dirname(__dir__)}/Resources/testKey1",
+          "testKey1",
+          "testKey1",
+          "testKey1",
+          screen_densities: ["MDPI", "HDPI", "XHDPI", "XXHDPI", "XXXHDPI"],
+          languages: ["en", "de", "da", "es", "fr", "it", "nb", "nl", "sv"],
+          build_type: 'Instant',
+          size_limit: 1.459,
+          limit_unit: 'MB',
         )
+
+        expect(@dangerfile.status_report[:warnings]).to eq(['The size limit of 1.459 MB has been exceeded by 18 variants'])
       end
     end
   end
