@@ -43,20 +43,21 @@ class AndroidUtils
         ub
     end
 
-    def self.generate_apks(aab_path, ks_path, ks_alias, ks_password, ks_alias_password, build_type, apks_path, bundletool_path) 
+    def self.generate_apks(aab_path, ks_path, ks_alias, ks_password, ks_alias_password, apks_path, bundletool_path) 
         keystore_params = "--ks=\"#{ks_path}\" --ks-key-alias=\"#{ks_alias}\" --ks-pass=\"pass:#{ks_password}\" --key-pass=\"pass:#{ks_alias_password}\""
         cmd = "java -jar #{bundletool_path} build-apks --bundle=\"#{aab_path}\" --output=\"#{apks_path}\" #{keystore_params}"
-        if(build_type == "Instant") 
-            cmd += " --instant"
-        end
         Open3.popen3(cmd) do |_, _, stderr, wait_thr|
             exit_status = wait_thr.value
             raise stderr.read unless exit_status.success?
         end
     end
     
-    def self.generate_estimated_sizes(apks_path, size_csv_path, bundletool_path)
-        cmd = "java -jar #{bundletool_path} get-size total --apks=\"#{apks_path}\" --dimensions=ALL > #{size_csv_path}"
+    def self.generate_estimated_sizes(apks_path, size_csv_path, bundletool_path, build_type)
+        bundletoolCmd = "java -jar #{bundletool_path} get-size total --apks=\"#{apks_path}\" --dimensions=ALL"
+        if(build_type == "Instant")
+            bundletoolCmd += " --instant"
+        end
+        cmd = "#{bundletoolCmd} > #{size_csv_path}"
         Open3.popen3(cmd) do |_, _, stderr, wait_thr|
             exit_status = wait_thr.value
             raise stderr.read unless exit_status.success?

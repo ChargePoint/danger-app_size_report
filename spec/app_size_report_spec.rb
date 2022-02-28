@@ -22,7 +22,7 @@ module Danger
         expect(json_string).to eq(expected_json)
       end
 
-      it 'Generates App Size Danger Report' do
+      it 'Generates IOS App Size Danger Report' do
         @app_size_report.flag_violations(
           "#{File.dirname(__dir__)}/Resources/App\ Thinning\ Size\ Report.txt",
           build_type: 'Clip',
@@ -31,6 +31,12 @@ module Danger
         )
 
         expect(@dangerfile.status_report[:warnings]).to eq(['The size limit of 10 MB has been exceeded by one or more variants'])
+      end
+
+      it 'Generates Android App Size Danger Report' do
+        @app_size_report.flag_android_violations(
+          "#{File.dirname(__dir__)}/"
+        )
       end
     end
   end

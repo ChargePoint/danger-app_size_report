@@ -148,7 +148,7 @@ module Danger
     # @return   [void]
     #
 
-    def flag_violations(aab_path, ks_path, ks_alias, ks_password, ks_alias_password, screen_densities: $default_screen_densities, languages: $default_languages, build_type: 'App', size_limit: 150, limit_unit: 'MB', fail_on_warning: false)
+    def flag_android_violations(aab_path, ks_path, ks_alias, ks_password, ks_alias_password, screen_densities: $default_screen_densities, languages: $default_languages, build_type: 'App', size_limit: 150, limit_unit: 'MB', fail_on_warning: false)
       unless %w[App Instant].include? build_type
         raise ArgumentError, "The 'build_type' argument only accepts the values \"App\" and \"Instant\""
       end
@@ -181,14 +181,6 @@ module Danger
       generate_android_size_report_markdown(sorted_sizes, build_type, size_limit, limit_unit, fail_on_warning, $variants_limit)
     end
 
-    def create_temp_dir()
-      Dir.mkdir $temp_path
-    end
-
-    def clean_temp!()
-      FileUtils.rm_rf($temp_path)
-    end
-
     # Returns a JSON string representation of the given App Thinning Size Report.
     # @param [String, required] report_path
     #        Path to valid App Thinning Size Report text file.
@@ -201,6 +193,14 @@ module Danger
     end
 
     private
+
+    def create_temp_dir()
+      Dir.mkdir $temp_path
+    end
+
+    def clean_temp!()
+      FileUtils.rm_rf($temp_path)
+    end
 
     def generate_android_size_report_markdown(sorted_sizes, build_type, size_limit, limit_unit, fail_on_warning, variants_limit)
       limit_size = MemorySize.new("#{size_limit}#{limit_unit}")
@@ -229,7 +229,7 @@ module Danger
 
       size_report = "# Android #{build_type} Size Report\n"
       size_report << "### Size limit = #{size_limit} #{limit_unit.upcase}\n\n"
-      size_report << "| Under Limit | SDK | ABI | Screen Density | Language | Size |\n"
+      size_report << "| Under Limit | SDK | ABI | Screen Density | Language | Size (Bytes) |\n"
       size_report << "| :-: | :-: | :-: | :-: | :-: | :-: |\n"
 
       if(sorted_sizes.length < variants_limit) 
