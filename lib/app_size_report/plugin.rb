@@ -123,6 +123,8 @@ module Danger
     #        Alias of signing key
     # @param [String, required] ks_password
     #        Password of signing key
+    # @param [String, required] ks_alias_password
+    #        Alias Password of signing key.
     # @param [Array, optional] screen_densities
     #        Array of screen densities to check APK size 
     #        Default: ["MDPI", "HDPI", "XHDPI", "XXHDPI", "XXXHDPI"]
