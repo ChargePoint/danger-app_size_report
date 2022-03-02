@@ -1,6 +1,6 @@
 # danger-app_size_report
 
-A [Danger](https://github.com/danger/danger) plugin for reporting iOS app size violations. A valid [App Thinning Size Report](https://developer.apple.com/documentation/xcode/reducing-your-app-s-size) must be passed to the plugin for accurate functionality.
+A [Danger](https://github.com/danger/danger) plugin for reporting iOS and Android app size violations.
 
 ## Installation
 
@@ -8,14 +8,14 @@ A [Danger](https://github.com/danger/danger) plugin for reporting iOS app size v
 
 ## Usage
 
-### `flag_violations`
+### `flag_ios_violations`
 
-Report app size violations given a valid App Thinning Size Report.
+Report app size violations given a valid App Thinning Size Report. A valid [App Thinning Size Report](https://developer.apple.com/documentation/xcode/reducing-your-app-s-size) must be passed to the plugin for accurate functionality.
 
     // Dangerfile
 
     report_path = "/Path/to/AppSizeReport.txt"
-    app_size_report.flag_violations(
+    app_size_report.flag_ios_violations(
         report_path,
         build_type: 'App',
         size_limit: 4,
@@ -35,7 +35,7 @@ Report app size violations given a valid App Thinning Size Report.
 
 ### `report_json`
 
-Returns a JSON string representation of the given App Thinning Size Report.
+Returns a JSON string representation of the given iOS App Thinning Size Report.
 
     // Dangerfile
 

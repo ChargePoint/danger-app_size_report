@@ -23,7 +23,7 @@ module Danger
       end
 
       it 'Generates IOS App Size Danger Report' do
-        @app_size_report.flag_violations(
+        @app_size_report.flag_ios_violations(
           "#{File.dirname(__dir__)}/Resources/App\ Thinning\ Size\ Report.txt",
           build_type: 'Clip',
           size_limit: 12,

@@ -20,15 +20,17 @@ module Danger
   $default_screen_densities = ["MDPI", "HDPI", "XHDPI", "XXHDPI", "XXXHDPI"]
   $default_languages = ["en"]
 
-  # A Danger plugin for reporting iOS app size violations.
-  # A valid App Thinning Size Report must be passed to the plugin
-  # for accurate functionality.
+  # A Danger plugin for reporting iOS and Android app size violations.
   #
-  # @example Report app size violations if one or more App variants
+  #
+  # A valid App Thinning Size Report must be passed to the plugin
+  # for accurate functionality in case of iOS.
+  #
+  # @example Report iOS app size violations if one or more App variants
   # exceed 4GB.
   #
   #          report_path = "/Path/to/AppSize/Report.txt"
-  #          app_size_report.flag_violations(
+  #          app_size_report.flag_ios_violations(
   #             report_path,
   #             build_type: 'App',
   #             size_limit: 4,
@@ -36,11 +38,11 @@ module Danger
   #             fail_on_warning: false
   #          )
   #
-  # @example Report app size violations if one or more App Clip variants
+  # @example Report iOS app size violations if one or more App Clip variants
   # exceed 8MB.
   #
   #          report_path = "/Path/to/AppSize/Report.txt"
-  #          app_size_report.flag_violations(
+  #          app_size_report.flag_ios_violations(
   #             report_path,
   #             build_type: 'Clip',
   #             size_limit: 8,
@@ -48,10 +50,10 @@ module Danger
   #             fail_on_warning: false
   #          )
   #
-  # @example Fail PR if one or more App Clip variants exceed 8MB.
+  # @example Fail PR if one or more iOS App Clip variants exceed 8MB.
   #
   #          report_path = "/Path/to/AppSize/Report.txt"
-  #          app_size_report.flag_violations(
+  #          app_size_report.flag_ios_violations(
   #             report_path,
   #             build_type: 'Clip',
   #             size_limit: 8,
@@ -59,10 +61,73 @@ module Danger
   #             fail_on_warning: true
   #          )
   #
-  # @example Get JSON string representation of app thinning size report
+  # @example Get JSON string representation of iOS app thinning size report
   #
   #          report_path = "/Path/to/AppSize/Report.txt"
   #          app_size_json = app_size_report.report_json(report_path)
+  #
+  # @example Report Android app size violations if one or more App variants
+  # 
+  #          aab_path = "/Path/to/app.aab"
+  #          ks_path = "/Path/to/keyStore"
+  #          ks_alias = "KeyAlias"
+  #          ks_password = "Key Password"
+  #          ks_alias_password = "Key Alias Password"
+  #          app_size_report.flag_android_violations(
+  #             aab_path,
+  #             ks_path,
+  #             ks_alias,
+  #             ks_password,
+  #             ks_alias_password,
+  #             screen_densities: ["MDPI", "HDPI", "XHDPI", "XXHDPI", "XXXHDPI"],
+  #             languages: ["en", "de", "da", "es", "fr", "it", "nb", "nl", "sv"],
+  #             build_type: 'App',
+  #             size_limit: 14,
+  #             limit_unit: 'MB',
+  #             fail_on_warning: false
+  #          )
+  #
+  # @example Report Android Instant app size violations if one or more App variants
+  # 
+  #          aab_path = "/Path/to/app.aab"
+  #          ks_path = "/Path/to/keyStore"
+  #          ks_alias = "KeyAlias"
+  #          ks_password = "Key Password"
+  #          ks_alias_password = "Key Alias Password"
+  #          app_size_report.flag_android_violations(
+  #             aab_path,
+  #             ks_path,
+  #             ks_alias,
+  #             ks_password,
+  #             ks_alias_password,
+  #             screen_densities: ["MDPI", "HDPI", "XHDPI", "XXHDPI", "XXXHDPI"],
+  #             languages: ["en", "de", "da", "es", "fr", "it", "nb", "nl", "sv"],
+  #             build_type: 'Instant',
+  #             size_limit: 4,
+  #             limit_unit: 'MB',
+  #             fail_on_warning: false
+  #          )
+  #
+  # @example Fail PR if one or more Android Instant App variants exceed 4MB.
+  # 
+  #          aab_path = "/Path/to/app.aab"
+  #          ks_path = "/Path/to/keyStore"
+  #          ks_alias = "KeyAlias"
+  #          ks_password = "Key Password"
+  #          ks_alias_password = "Key Alias Password"
+  #          app_size_report.flag_android_violations(
+  #             aab_path,
+  #             ks_path,
+  #             ks_alias,
+  #             ks_password,
+  #             ks_alias_password,
+  #             screen_densities: ["MDPI", "HDPI", "XHDPI", "XXHDPI", "XXXHDPI"],
+  #             languages: ["en", "de", "da", "es", "fr", "it", "nb", "nl", "sv"],
+  #             build_type: 'Instant',
+  #             size_limit: 4,
+  #             limit_unit: 'MB',
+  #             fail_on_warning: true
+  #          )
   #
   # @see  ChargePoint/danger-app_size_report
   # @tags ios, xcode, appclip, thinning, size
@@ -89,7 +154,7 @@ module Danger
     #        Default: 'false'
     # @return   [void]
     #
-    def flag_violations(report_path, build_type: 'App', size_limit: 4, limit_unit: 'GB', fail_on_warning: false)
+    def flag_ios_violations(report_path, build_type: 'App', size_limit: 4, limit_unit: 'GB', fail_on_warning: false)
       report_text = File.read(report_path)
       variants = ReportParser.parse(report_text)
 
