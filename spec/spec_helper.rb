@@ -22,6 +22,7 @@ RSpec.configure do |config|
   config.filter_gems_from_backtrace 'bundler'
   config.color = true
   config.tty = true
+  config.formatter = :documentation 
 end
 
 require 'danger_plugin'

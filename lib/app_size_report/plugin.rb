@@ -2,18 +2,35 @@
 
 module Danger
   require 'json'
+  require 'open-uri'
+  require 'fileutils'
+
   require_relative '../converter/parser/report_parser'
   require_relative '../converter/helper/memory_size'
+  require_relative '../converter/helper/android_utils'
 
-  # A Danger plugin for reporting iOS app size violations.
-  # A valid App Thinning Size Report must be passed to the plugin
-  # for accurate functionality.
+  $project_root = Dir.pwd
+  $temp_path = "#{$project_root}/temp"
+  $apks_path = "#{$temp_path}/output.apks"
+  $size_csv_path = "#{$temp_path}/output.csv"
+  $bundletool_path = "#{$temp_path}/bundletool.jar"
+  $bundletool_version = "1.8.2"
+  $variants_limit = 30
+
+  $default_screen_densities = ["MDPI", "HDPI", "XHDPI", "XXHDPI", "XXXHDPI"]
+  $default_languages = ["en"]
+
+  # A Danger plugin for reporting iOS and Android app size violations.
   #
-  # @example Report app size violations if one or more App variants
+  #
+  # A valid App Thinning Size Report must be passed to the plugin
+  # for accurate functionality in case of iOS.
+  #
+  # @example Report iOS app size violations if one or more App variants
   # exceed 4GB.
   #
   #          report_path = "/Path/to/AppSize/Report.txt"
-  #          app_size_report.flag_violations(
+  #          app_size_report.flag_ios_violations(
   #             report_path,
   #             build_type: 'App',
   #             size_limit: 4,
@@ -21,11 +38,11 @@ module Danger
   #             fail_on_warning: false
   #          )
   #
-  # @example Report app size violations if one or more App Clip variants
+  # @example Report iOS app size violations if one or more App Clip variants
   # exceed 8MB.
   #
   #          report_path = "/Path/to/AppSize/Report.txt"
-  #          app_size_report.flag_violations(
+  #          app_size_report.flag_ios_violations(
   #             report_path,
   #             build_type: 'Clip',
   #             size_limit: 8,
@@ -33,10 +50,10 @@ module Danger
   #             fail_on_warning: false
   #          )
   #
-  # @example Fail PR if one or more App Clip variants exceed 8MB.
+  # @example Fail PR if one or more iOS App Clip variants exceed 8MB.
   #
   #          report_path = "/Path/to/AppSize/Report.txt"
-  #          app_size_report.flag_violations(
+  #          app_size_report.flag_ios_violations(
   #             report_path,
   #             build_type: 'Clip',
   #             size_limit: 8,
@@ -44,16 +61,79 @@ module Danger
   #             fail_on_warning: true
   #          )
   #
-  # @example Get JSON string representation of app thinning size report
+  # @example Get JSON string representation of iOS app thinning size report
   #
   #          report_path = "/Path/to/AppSize/Report.txt"
   #          app_size_json = app_size_report.report_json(report_path)
+  #
+  # @example Report Android app size violations if one or more App variants
+  # 
+  #          aab_path = "/Path/to/app.aab"
+  #          ks_path = "/Path/to/keyStore"
+  #          ks_alias = "KeyAlias"
+  #          ks_password = "Key Password"
+  #          ks_alias_password = "Key Alias Password"
+  #          app_size_report.flag_android_violations(
+  #             aab_path,
+  #             ks_path,
+  #             ks_alias,
+  #             ks_password,
+  #             ks_alias_password,
+  #             screen_densities: ["MDPI", "HDPI", "XHDPI", "XXHDPI", "XXXHDPI"],
+  #             languages: ["en", "de", "da", "es", "fr", "it", "nb", "nl", "sv"],
+  #             build_type: 'App',
+  #             size_limit: 14,
+  #             limit_unit: 'MB',
+  #             fail_on_warning: false
+  #          )
+  #
+  # @example Report Android Instant app size violations if one or more App variants
+  # 
+  #          aab_path = "/Path/to/app.aab"
+  #          ks_path = "/Path/to/keyStore"
+  #          ks_alias = "KeyAlias"
+  #          ks_password = "Key Password"
+  #          ks_alias_password = "Key Alias Password"
+  #          app_size_report.flag_android_violations(
+  #             aab_path,
+  #             ks_path,
+  #             ks_alias,
+  #             ks_password,
+  #             ks_alias_password,
+  #             screen_densities: ["MDPI", "HDPI", "XHDPI", "XXHDPI", "XXXHDPI"],
+  #             languages: ["en", "de", "da", "es", "fr", "it", "nb", "nl", "sv"],
+  #             build_type: 'Instant',
+  #             size_limit: 4,
+  #             limit_unit: 'MB',
+  #             fail_on_warning: false
+  #          )
+  #
+  # @example Fail PR if one or more Android Instant App variants exceed 4MB.
+  # 
+  #          aab_path = "/Path/to/app.aab"
+  #          ks_path = "/Path/to/keyStore"
+  #          ks_alias = "KeyAlias"
+  #          ks_password = "Key Password"
+  #          ks_alias_password = "Key Alias Password"
+  #          app_size_report.flag_android_violations(
+  #             aab_path,
+  #             ks_path,
+  #             ks_alias,
+  #             ks_password,
+  #             ks_alias_password,
+  #             screen_densities: ["MDPI", "HDPI", "XHDPI", "XXHDPI", "XXXHDPI"],
+  #             languages: ["en", "de", "da", "es", "fr", "it", "nb", "nl", "sv"],
+  #             build_type: 'Instant',
+  #             size_limit: 4,
+  #             limit_unit: 'MB',
+  #             fail_on_warning: true
+  #          )
   #
   # @see  ChargePoint/danger-app_size_report
   # @tags ios, xcode, appclip, thinning, size
   #
   class DangerAppSizeReport < Plugin
-    # Reports app size violations given a valid App Thinning Size Report.
+    # Reports IOS app size violations given a valid App Thinning Size Report.
     # @param [String, required] report_path
     #        Path to valid App Thinning Size Report text file.
     # @param [String, optional] build_type
@@ -74,7 +154,7 @@ module Danger
     #        Default: 'false'
     # @return   [void]
     #
-    def flag_violations(report_path, build_type: 'App', size_limit: 4, limit_unit: 'GB', fail_on_warning: false)
+    def flag_ios_violations(report_path, build_type: 'App', size_limit: 4, limit_unit: 'GB', fail_on_warning: false)
       report_text = File.read(report_path)
       variants = ReportParser.parse(report_text)
 
@@ -98,6 +178,76 @@ module Danger
       generate_ads_label_markdown
     end
 
+
+    # Reports Android app size violations given a valid AAB.
+    # @param [String, required] aab_path
+    #        Path to valid AAB file.
+    # @param [String, required] ks_path
+    #        Path to valid signing key file.
+    # @param [String, required] ks_alias
+    #        Alias of signing key
+    # @param [String, required] ks_password
+    #        Password of signing key
+    # @param [String, required] ks_alias_password
+    #        Alias Password of signing key.
+    # @param [Array, optional] screen_densities
+    #        Array of screen densities to check APK size 
+    #        Default: ["MDPI", "HDPI", "XHDPI", "XXHDPI", "XXXHDPI"]
+    # @param [Array, optional] languages
+    #        Array of languages to check APK size 
+    #        Default: ["en"]
+    # @param [String, optional] build_type
+    #        Specify whether the report corresponds to an App, Instant.
+    #        Default: 'App'
+    #        Supported values: 'App', 'Instant'
+    # @param [Numeric, optional] size_limit
+    #        Specify the app size limit.
+    #        Default: 150
+    # @param [String, optional] limit_unit
+    #        Specific the unit for the given size limit.
+    #        Default: 'MB'
+    #        Supported values: 'KB', 'MB', 'GB'
+    # @param [Boolean, optional] fail_on_warning
+    #        Specify whether the PR should fail if one or more app variants
+    #        exceed the given size limit. By default, the plugin issues
+    #        a warning in this case.
+    #        Default: 'false'
+    # @return   [void]
+    #
+
+    def flag_android_violations(aab_path, ks_path, ks_alias, ks_password, ks_alias_password, screen_densities: $default_screen_densities, languages: $default_languages, build_type: 'App', size_limit: 150, limit_unit: 'MB', fail_on_warning: false)
+      unless %w[App Instant].include? build_type
+        raise ArgumentError, "The 'build_type' argument only accepts the values \"App\" and \"Instant\""
+      end
+
+      raise ArgumentError, "The 'size_limit' argument only accepts numeric values" unless size_limit.is_a? Numeric
+
+      limit_unit.upcase!
+      unless %w[KB MB GB].include? limit_unit
+        raise ArgumentError, "The 'limit_unit' argument only accepts the values \"KB\", \"MB\" and \"GB\""
+      end
+
+      unless [true, false].include? fail_on_warning
+        raise ArgumentError, "The 'fail_on_warning' argument only accepts the values 'true' and 'false'"
+      end
+
+      create_temp_dir
+
+      unless AndroidUtils.download_bundletool($bundletool_version, $bundletool_path)
+        clean_temp!
+        return
+      end
+
+      AndroidUtils.generate_apks(aab_path, ks_path, ks_alias, ks_password, ks_alias_password, $apks_path, $bundletool_path) 
+      AndroidUtils.generate_estimated_sizes($apks_path, $size_csv_path, $bundletool_path, build_type)
+      filtered_sizes = AndroidUtils.filter_estimated_sizes($size_csv_path, screen_densities, languages)
+      sorted_sizes = AndroidUtils.sort_estimated_sizes(filtered_sizes)
+
+      clean_temp!
+
+      generate_android_size_report_markdown(sorted_sizes, build_type, size_limit, limit_unit, fail_on_warning, $variants_limit)
+    end
+
     # Returns a JSON string representation of the given App Thinning Size Report.
     # @param [String, required] report_path
     #        Path to valid App Thinning Size Report text file.
@@ -110,6 +260,60 @@ module Danger
     end
 
     private
+
+    def create_temp_dir()
+      Dir.mkdir $temp_path
+    end
+
+    def clean_temp!()
+      FileUtils.rm_rf($temp_path)
+    end
+
+    def generate_android_size_report_markdown(sorted_sizes, build_type, size_limit, limit_unit, fail_on_warning, variants_limit)
+      limit_size = MemorySize.new("#{size_limit}#{limit_unit}")
+
+      if build_type == 'Instant' && limit_size.megabytes > 4
+        message "The size limit was set to 4 MB as the given limit of #{size_limit} #{limit_unit} exceeds Android Instant App size restrictions"
+        size_limit = 4
+        limit_unit = 'MB'
+        limit_size.kilobytes = 4 * 1024
+      elsif build_type == 'App' && limit_size.megabytes > 150
+        message "The size limit was set to 150 MB as the given limit of #{size_limit} #{limit_unit} exceeds Android App size restrictions"
+        size_limit = 150
+        limit_unit = 'MB'
+        limit_size.kilobytes = 150 * 1024
+      end
+
+      violation_count = AndroidUtils.violations_count(sorted_sizes, limit_size.bytes) 
+      
+      if violation_count>0
+        if fail_on_warning
+          failure "The size limit of #{size_limit} #{limit_unit.upcase} has been exceeded by #{violation_count} variants"
+        else
+          warn "The size limit of #{size_limit} #{limit_unit.upcase} has been exceeded by #{violation_count} variants"
+        end
+      end
+
+      size_report = "# Android #{build_type} Size Report\n"
+      size_report << "### Size limit = #{size_limit} #{limit_unit.upcase}\n\n"
+      size_report << "| Under Limit | SDK | ABI | Screen Density | Language | Size (Bytes) |\n"
+      size_report << "| :-: | :-: | :-: | :-: | :-: | :-: |\n"
+
+      if(sorted_sizes.length < variants_limit) 
+        variants_limit = sorted_sizes.length
+      end
+
+      counter = 0
+      while(counter < variants_limit)
+        variant = sorted_sizes[counter]
+        is_violating = variant.max >= limit_size.bytes ? '❌' : '✅'
+        size_report << "#{is_violating} | #{variant.sdk} | #{variant.abi} | #{variant.screen_density} | #{variant.language} | #{variant.max} |\n"
+        counter+=1
+      end
+
+      markdown size_report
+      
+    end
 
     def generate_size_report_markdown(variants, build_type, size_limit, limit_unit, fail_on_warning)
       limit_size = MemorySize.new("#{size_limit}#{limit_unit}")
