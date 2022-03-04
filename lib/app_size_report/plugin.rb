@@ -321,7 +321,7 @@ module Danger
         size_report << "<details>\n<summary>Click to expand!</summary>\n\n"
   
         size_report << exceed_size_report
-        size_report << "</details>\n"
+        size_report << "</details>\n\n"
       end
 
       size_report << "## Variants under or equal to the size limit\n\n"
