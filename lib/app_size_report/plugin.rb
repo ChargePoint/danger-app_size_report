@@ -245,7 +245,7 @@ module Danger
 
       clean_temp!
 
-      generate_android_size_report_markdown(sorted_sizes, build_type, size_limit, limit_unit, fail_on_warning, $variants_limit)
+      generate_android_size_report_markdown(sorted_sizes, build_type, size_limit, limit_unit, fail_on_warning)
     end
 
     # Returns a JSON string representation of the given App Thinning Size Report.
@@ -269,7 +269,7 @@ module Danger
       FileUtils.rm_rf($temp_path)
     end
 
-    def generate_android_size_report_markdown(sorted_sizes, build_type, size_limit, limit_unit, fail_on_warning, variants_limit)
+    def generate_android_size_report_markdown(sorted_sizes, build_type, size_limit, limit_unit, fail_on_warning)
       limit_size = MemorySize.new("#{size_limit}#{limit_unit}")
 
       if build_type == 'Instant' && limit_size.megabytes > 4
@@ -294,22 +294,41 @@ module Danger
         end
       end
 
-      size_report = "# Android #{build_type} Size Report\n"
-      size_report << "### Size limit = #{size_limit} #{limit_unit.upcase}\n\n"
-      size_report << "| Under Limit | SDK | ABI | Screen Density | Language | Size (Bytes) |\n"
-      size_report << "| :-: | :-: | :-: | :-: | :-: | :-: |\n"
+      exceed_size_report = "| Under Limit | SDK | ABI | Screen Density | Language | Size (Bytes) |\n"
+      exceed_size_report << "| :-: | :-: | :-: | :-: | :-: | :-: |\n"
 
-      if(sorted_sizes.length < variants_limit) 
-        variants_limit = sorted_sizes.length
-      end
+      under_size_report = "| Under Limit | SDK | ABI | Screen Density | Language | Size (Bytes) |\n"
+      under_size_report << "| :-: | :-: | :-: | :-: | :-: | :-: |\n"
 
-      counter = 0
-      while(counter < variants_limit)
+      counter = sorted_sizes.length - 1
+      while(counter >= 0)
         variant = sorted_sizes[counter]
         is_violating = variant.max >= limit_size.bytes ? '❌' : '✅'
-        size_report << "#{is_violating} | #{variant.sdk} | #{variant.abi} | #{variant.screen_density} | #{variant.language} | #{variant.max} |\n"
-        counter+=1
+        variant_report = "#{is_violating} | #{variant.sdk} | #{variant.abi} | #{variant.screen_density} | #{variant.language} | #{variant.max} |\n"
+        if variant.max > limit_size.bytes
+          exceed_size_report << variant_report
+        else
+          under_size_report << variant_report
+        end
+        counter-=1
       end
+
+      size_report = "# Android #{build_type} Size Report\n"
+      size_report << "### Size limit = #{size_limit} #{limit_unit.upcase}\n\n"
+
+      if violation_count > 0
+        size_report << "## Variants exceeding the size limit\n\n"
+        size_report << "<details>\n<summary>Click to expand!</summary>\n\n"
+  
+        size_report << exceed_size_report
+        size_report << "</details>\n"
+      end
+
+      size_report << "## Variants under or equal to the size limit\n\n"
+      size_report << "<details>\n<summary>Click to expand!</summary>\n\n"
+
+      size_report << under_size_report
+      size_report << "</details>\n"
 
       markdown size_report
       
