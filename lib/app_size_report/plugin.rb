@@ -245,7 +245,7 @@ module Danger
 
       clean_temp!
 
-      generate_android_size_report_markdown(sorted_sizes, build_type, size_limit, limit_unit, fail_on_warning, variants_limit)
+      generate_android_size_report_markdown(sorted_sizes, build_type, size_limit, limit_unit, fail_on_warning, $variants_limit)
     end
 
     # Returns a JSON string representation of the given App Thinning Size Report.
