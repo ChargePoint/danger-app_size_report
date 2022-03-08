@@ -15,7 +15,7 @@ module Danger
   $size_csv_path = "#{$temp_path}/output.csv"
   $bundletool_path = "#{$temp_path}/bundletool.jar"
   $bundletool_version = "1.8.2"
-  $variants_limit = 30
+  $variants_limit = 6
 
   $default_screen_densities = ["MDPI", "HDPI", "XHDPI", "XXHDPI", "XXXHDPI"]
   $default_languages = ["en"]
@@ -245,7 +245,7 @@ module Danger
 
       clean_temp!
 
-      generate_android_size_report_markdown(sorted_sizes, build_type, size_limit, limit_unit, fail_on_warning)
+      generate_android_size_report_markdown(sorted_sizes, build_type, size_limit, limit_unit, fail_on_warning, variants_limit)
     end
 
     # Returns a JSON string representation of the given App Thinning Size Report.
@@ -269,7 +269,7 @@ module Danger
       FileUtils.rm_rf($temp_path)
     end
 
-    def generate_android_size_report_markdown(sorted_sizes, build_type, size_limit, limit_unit, fail_on_warning)
+    def generate_android_size_report_markdown(sorted_sizes, build_type, size_limit, limit_unit, fail_on_warning, variants_limit)
       limit_size = MemorySize.new("#{size_limit}#{limit_unit}")
 
       if build_type == 'Instant' && limit_size.megabytes > 4
@@ -297,19 +297,37 @@ module Danger
       exceed_size_report = "| Under Limit | SDK | ABI | Screen Density | Language | Size (Bytes) |\n"
       exceed_size_report << "| :-: | :-: | :-: | :-: | :-: | :-: |\n"
 
+      more_exceed_size_report = "| Under Limit | SDK | ABI | Screen Density | Language | Size (Bytes) |\n"
+      more_exceed_size_report << "| :-: | :-: | :-: | :-: | :-: | :-: |\n"
+
       under_size_report = "| Under Limit | SDK | ABI | Screen Density | Language | Size (Bytes) |\n"
       under_size_report << "| :-: | :-: | :-: | :-: | :-: | :-: |\n"
 
       counter = sorted_sizes.length - 1
+      exceed_counter = 0
+      more_exceed_counter = 0
+      under_counter = 0
+
       while(counter >= 0)
         variant = sorted_sizes[counter]
-        is_violating = variant.max >= limit_size.bytes ? '❌' : '✅'
+        is_violating = variant.max > limit_size.bytes ? '❌' : '✅'
         variant_report = "#{is_violating} | #{variant.sdk} | #{variant.abi} | #{variant.screen_density} | #{variant.language} | #{variant.max} |\n"
+
         if variant.max > limit_size.bytes
-          exceed_size_report << variant_report
+          if exceed_counter <= variants_limit
+            exceed_counter += 1
+            exceed_size_report << variant_report
+          elsif exceed_counter > variants_limit and more_exceed_counter <= variants_limit
+            more_exceed_counter += 1
+            more_exceed_size_report << variant_report
+          end
         else
-          under_size_report << variant_report
+          if under_counter <= variants_limit
+            under_counter += 1
+            under_size_report << variant_report
+          end
         end
+
         counter-=1
       end
 
@@ -318,10 +336,14 @@ module Danger
 
       if violation_count > 0
         size_report << "## Variants exceeding the size limit\n\n"
-        size_report << "<details>\n<summary>Click to expand!</summary>\n\n"
-  
         size_report << exceed_size_report
-        size_report << "</details>\n\n"
+        size_report << "\n"
+
+        if violation_count > variants_limit
+          size_report << "<details>\n<summary>Click to expand!</summary>\n\n"
+          size_report << more_exceed_size_report
+          size_report << "</details>\n\n"
+        end
       end
 
       size_report << "## Variants under or equal to the size limit\n\n"
