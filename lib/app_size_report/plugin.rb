@@ -15,7 +15,7 @@ module Danger
   $size_csv_path = "#{$temp_path}/output.csv"
   $bundletool_path = "#{$temp_path}/bundletool.jar"
   $bundletool_version = "1.8.2"
-  $variants_limit = 6
+  $variants_limit = 25
 
   $default_screen_densities = ["MDPI", "HDPI", "XHDPI", "XXHDPI", "XXXHDPI"]
   $default_languages = ["en"]
@@ -304,9 +304,8 @@ module Danger
       under_size_report << "| :-: | :-: | :-: | :-: | :-: | :-: |\n"
 
       counter = sorted_sizes.length - 1
-      exceed_counter = 0
-      more_exceed_counter = 0
-      under_counter = 0
+      exceed_counter = 1
+      under_counter = 1
 
       while(counter >= 0)
         variant = sorted_sizes[counter]
@@ -317,8 +316,7 @@ module Danger
           if exceed_counter <= variants_limit
             exceed_counter += 1
             exceed_size_report << variant_report
-          elsif exceed_counter > variants_limit and more_exceed_counter <= variants_limit
-            more_exceed_counter += 1
+          else 
             more_exceed_size_report << variant_report
           end
         else
@@ -340,7 +338,7 @@ module Danger
         size_report << "\n"
 
         if violation_count > variants_limit
-          size_report << "<details>\n<summary>Click to expand!</summary>\n\n"
+          size_report << "<details>\n<summary>Click to view more violating variants!</summary>\n\n"
           size_report << more_exceed_size_report
           size_report << "</details>\n\n"
         end
