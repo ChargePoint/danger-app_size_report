@@ -24,7 +24,7 @@ class AndroidUtils
     end
 
     def self.sort_estimated_sizes(size_arr) 
-        size_arr.sort{|o1, o2| o2.max <=> o1.max} 
+        size_arr.sort{|o1, o2| o1.max <=> o2.max} 
     end
 
     def self.violations_count(sortedArr, limit)
@@ -32,15 +32,12 @@ class AndroidUtils
         while ub - lb > 1
             mid = (lb + ub) / 2
             if sortedArr[mid].max <= limit
-                ub = mid
-            else
                 lb = mid
+            else
+                ub = mid
             end
         end
-        if(ub == -1) 
-            return 0
-        end
-        ub
+        return sortedArr.length - ub
     end
 
     def self.generate_apks(aab_path, ks_path, ks_alias, ks_password, ks_alias_password, apks_path, bundletool_path) 

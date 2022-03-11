@@ -15,7 +15,7 @@ module Danger
   $size_csv_path = "#{$temp_path}/output.csv"
   $bundletool_path = "#{$temp_path}/bundletool.jar"
   $bundletool_version = "1.8.2"
-  $variants_limit = 30
+  $variants_limit = 25
 
   $default_screen_densities = ["MDPI", "HDPI", "XHDPI", "XXHDPI", "XXXHDPI"]
   $default_languages = ["en"]
@@ -294,22 +294,61 @@ module Danger
         end
       end
 
+      exceed_size_report = "| Under Limit | SDK | ABI | Screen Density | Language | Size (Bytes) |\n"
+      exceed_size_report << "| :-: | :-: | :-: | :-: | :-: | :-: |\n"
+
+      more_exceed_size_report = "| Under Limit | SDK | ABI | Screen Density | Language | Size (Bytes) |\n"
+      more_exceed_size_report << "| :-: | :-: | :-: | :-: | :-: | :-: |\n"
+
+      under_size_report = "| Under Limit | SDK | ABI | Screen Density | Language | Size (Bytes) |\n"
+      under_size_report << "| :-: | :-: | :-: | :-: | :-: | :-: |\n"
+
+      counter = sorted_sizes.length - 1
+      exceed_counter = 1
+      under_counter = 1
+
+      while(counter >= 0)
+        variant = sorted_sizes[counter]
+        is_violating = variant.max > limit_size.bytes ? '❌' : '✅'
+        variant_report = "#{is_violating} | #{variant.sdk} | #{variant.abi} | #{variant.screen_density} | #{variant.language} | #{variant.max} |\n"
+
+        if variant.max > limit_size.bytes
+          if exceed_counter <= variants_limit
+            exceed_counter += 1
+            exceed_size_report << variant_report
+          else 
+            more_exceed_size_report << variant_report
+          end
+        else
+          if under_counter <= variants_limit
+            under_counter += 1
+            under_size_report << variant_report
+          end
+        end
+
+        counter-=1
+      end
+
       size_report = "# Android #{build_type} Size Report\n"
       size_report << "### Size limit = #{size_limit} #{limit_unit.upcase}\n\n"
-      size_report << "| Under Limit | SDK | ABI | Screen Density | Language | Size (Bytes) |\n"
-      size_report << "| :-: | :-: | :-: | :-: | :-: | :-: |\n"
 
-      if(sorted_sizes.length < variants_limit) 
-        variants_limit = sorted_sizes.length
+      if violation_count > 0
+        size_report << "## Variants exceeding the size limit\n\n"
+        size_report << exceed_size_report
+        size_report << "\n"
+
+        if violation_count > variants_limit
+          size_report << "<details>\n<summary>Click to view more violating variants!</summary>\n\n"
+          size_report << more_exceed_size_report
+          size_report << "</details>\n\n"
+        end
       end
 
-      counter = 0
-      while(counter < variants_limit)
-        variant = sorted_sizes[counter]
-        is_violating = variant.max >= limit_size.bytes ? '❌' : '✅'
-        size_report << "#{is_violating} | #{variant.sdk} | #{variant.abi} | #{variant.screen_density} | #{variant.language} | #{variant.max} |\n"
-        counter+=1
-      end
+      size_report << "## Variants under or equal to the size limit\n\n"
+      size_report << "<details>\n<summary>Click to expand!</summary>\n\n"
+
+      size_report << under_size_report
+      size_report << "</details>\n"
 
       markdown size_report
       
