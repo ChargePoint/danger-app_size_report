@@ -8,10 +8,10 @@ require 'app_size_report/gem_version'
 Gem::Specification.new do |spec|
   spec.name          = 'danger-app_size_report'
   spec.version       = AppSizeReport::VERSION
-  spec.authors       = ['Rishab Sukumar']
+  spec.authors       = ['Rishab Sukumar', 'Bharath Thakkallapally', 'Vido Shaweddy']
   spec.email         = ['rishab.sukumar@chargepoint.com']
-  spec.description   = 'A Danger plugin for reporting iOS app size violations.'
-  spec.summary       = 'A Danger plugin for reporting iOS app size violations. A valid App Thinning Size Report must be passed to the plugin for accurate functionality.'
+  spec.description   = 'A Danger plugin for reporting iOS and Android app size violations.'
+  spec.summary       = 'A Danger plugin for reporting iOS and Android app size violations. A valid App Thinning Size Report or Android App Bundle must be passed to the plugin for accurate functionality.'
   spec.homepage      = 'https://github.com/ChargePoint/danger-app_size_report'
   spec.license       = 'MIT'
 
