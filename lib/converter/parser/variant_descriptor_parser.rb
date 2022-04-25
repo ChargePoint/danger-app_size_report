@@ -4,6 +4,7 @@ require_relative '../models/device_model'
 require 'securerandom'
 require_relative './model_parser'
 
+# Parser for Variant descriptor section of App Thinning Size Report
 class VariantDescriptorParser < ModelParser
   def parse
     @text = @text.strip

@@ -9,17 +9,6 @@ module Danger
   require_relative '../converter/helper/memory_size'
   require_relative '../converter/helper/android_utils'
 
-  $project_root = Dir.pwd
-  $temp_path = "#{$project_root}/temp"
-  $apks_path = "#{$temp_path}/output.apks"
-  $size_csv_path = "#{$temp_path}/output.csv"
-  $bundletool_path = "#{$temp_path}/bundletool.jar"
-  $bundletool_version = "1.8.2"
-  $variants_limit = 25
-
-  $default_screen_densities = ["MDPI", "HDPI", "XHDPI", "XXHDPI", "XXXHDPI"]
-  $default_languages = ["en"]
-
   # A Danger plugin for reporting iOS and Android app size violations.
   #
   #
@@ -67,7 +56,7 @@ module Danger
   #          app_size_json = app_size_report.report_json(report_path)
   #
   # @example Report Android app size violations if one or more App variants
-  # 
+  #
   #          aab_path = "/Path/to/app.aab"
   #          ks_path = "/Path/to/keyStore"
   #          ks_alias = "KeyAlias"
@@ -88,7 +77,7 @@ module Danger
   #          )
   #
   # @example Report Android Instant app size violations if one or more App variants
-  # 
+  #
   #          aab_path = "/Path/to/app.aab"
   #          ks_path = "/Path/to/keyStore"
   #          ks_alias = "KeyAlias"
@@ -109,7 +98,7 @@ module Danger
   #          )
   #
   # @example Fail PR if one or more Android Instant App variants exceed 4MB.
-  # 
+  #
   #          aab_path = "/Path/to/app.aab"
   #          ks_path = "/Path/to/keyStore"
   #          ks_alias = "KeyAlias"
@@ -158,26 +147,19 @@ module Danger
       report_text = File.read(report_path)
       variants = ReportParser.parse(report_text)
 
-      unless %w[App Clip].include? build_type
-        raise ArgumentError, "The 'build_type' argument only accepts the values \"App\" and \"Clip\""
-      end
+      raise ArgumentError, "The 'build_type' argument only accepts the values \"App\" and \"Clip\"" unless %w[App Clip].include? build_type
 
       raise ArgumentError, "The 'size_limit' argument only accepts numeric values" unless size_limit.is_a? Numeric
 
       limit_unit.upcase!
-      unless %w[KB MB GB].include? limit_unit
-        raise ArgumentError, "The 'build_type' argument only accepts the values \"KB\", \"MB\" and \"GB\""
-      end
+      raise ArgumentError, "The 'build_type' argument only accepts the values \"KB\", \"MB\" and \"GB\"" unless %w[KB MB GB].include? limit_unit
 
-      unless [true, false].include? fail_on_warning
-        raise ArgumentError, "The 'fail_on_warning' argument only accepts the values 'true' and 'false'"
-      end
+      raise ArgumentError, "The 'fail_on_warning' argument only accepts the values 'true' and 'false'" unless [true, false].include? fail_on_warning
 
       generate_size_report_markdown(variants, build_type, size_limit, limit_unit, fail_on_warning)
       generate_variant_descriptors_markdown(variants)
       generate_ads_label_markdown
     end
-
 
     # Reports Android app size violations given a valid AAB.
     # @param [String, required] aab_path
@@ -191,10 +173,10 @@ module Danger
     # @param [String, required] ks_alias_password
     #        Alias Password of signing key.
     # @param [Array, optional] screen_densities
-    #        Array of screen densities to check APK size 
+    #        Array of screen densities to check APK size
     #        Default: ["MDPI", "HDPI", "XHDPI", "XXHDPI", "XXXHDPI"]
     # @param [Array, optional] languages
-    #        Array of languages to check APK size 
+    #        Array of languages to check APK size
     #        Default: ["en"]
     # @param [String, optional] build_type
     #        Specify whether the report corresponds to an App, Instant.
@@ -214,38 +196,41 @@ module Danger
     #        Default: 'false'
     # @return   [void]
     #
+    def flag_android_violations(aab_path, ks_path, ks_alias, ks_password, ks_alias_password, screen_densities: %w[MDPI HDPI XHDPI XXHDPI XXXHDPI], languages: ['en'], build_type: 'App', size_limit: 150, limit_unit: 'MB', fail_on_warning: false)
+      project_root = Dir.pwd
+      temp_path = "#{project_root}/temp"
+      apks_path = "#{temp_path}/output.apks"
+      size_csv_path = "#{temp_path}/output.csv"
+      bundletool_path = "#{temp_path}/bundletool.jar"
+      bundletool_version = '1.8.2'
+      variants_limit = 25
 
-    def flag_android_violations(aab_path, ks_path, ks_alias, ks_password, ks_alias_password, screen_densities: $default_screen_densities, languages: $default_languages, build_type: 'App', size_limit: 150, limit_unit: 'MB', fail_on_warning: false)
-      unless %w[App Instant].include? build_type
-        raise ArgumentError, "The 'build_type' argument only accepts the values \"App\" and \"Instant\""
-      end
+      raise ArgumentError, "The 'build_type' argument only accepts the values \"App\" and \"Instant\"" unless %w[App Instant].include? build_type
 
       raise ArgumentError, "The 'size_limit' argument only accepts numeric values" unless size_limit.is_a? Numeric
 
       limit_unit.upcase!
-      unless %w[KB MB GB].include? limit_unit
-        raise ArgumentError, "The 'limit_unit' argument only accepts the values \"KB\", \"MB\" and \"GB\""
-      end
+      raise ArgumentError, "The 'limit_unit' argument only accepts the values \"KB\", \"MB\" and \"GB\"" unless %w[KB MB GB].include? limit_unit
 
-      unless [true, false].include? fail_on_warning
-        raise ArgumentError, "The 'fail_on_warning' argument only accepts the values 'true' and 'false'"
-      end
+      raise ArgumentError, "The 'fail_on_warning' argument only accepts the values 'true' and 'false'" unless [true, false].include? fail_on_warning
 
-      create_temp_dir
+      create_temp_dir(temp_path)
 
-      unless AndroidUtils.download_bundletool($bundletool_version, $bundletool_path)
+      unless AndroidUtils.download_bundletool(bundletool_version, bundletool_path)
         clean_temp!
         return
       end
 
-      AndroidUtils.generate_apks(aab_path, ks_path, ks_alias, ks_password, ks_alias_password, $apks_path, $bundletool_path) 
-      AndroidUtils.generate_estimated_sizes($apks_path, $size_csv_path, $bundletool_path, build_type)
-      filtered_sizes = AndroidUtils.filter_estimated_sizes($size_csv_path, screen_densities, languages)
+      AndroidUtils.generate_apks(aab_path, ks_path, ks_alias, ks_password, ks_alias_password, apks_path,
+                                 bundletool_path)
+      AndroidUtils.generate_estimated_sizes(apks_path, size_csv_path, bundletool_path, build_type)
+      filtered_sizes = AndroidUtils.filter_estimated_sizes(size_csv_path, screen_densities, languages)
       sorted_sizes = AndroidUtils.sort_estimated_sizes(filtered_sizes)
 
-      clean_temp!
+      clean_temp!(temp_path)
 
-      generate_android_size_report_markdown(sorted_sizes, build_type, size_limit, limit_unit, fail_on_warning, $variants_limit)
+      generate_android_size_report_markdown(sorted_sizes, build_type, size_limit, limit_unit, fail_on_warning,
+                                            variants_limit)
     end
 
     # Returns a JSON string representation of the given App Thinning Size Report.
@@ -261,12 +246,12 @@ module Danger
 
     private
 
-    def create_temp_dir()
-      Dir.mkdir $temp_path
+    def create_temp_dir(temp_path)
+      Dir.mkdir temp_path
     end
 
-    def clean_temp!()
-      FileUtils.rm_rf($temp_path)
+    def clean_temp!(temp_path)
+      FileUtils.rm_rf(temp_path)
     end
 
     def generate_android_size_report_markdown(sorted_sizes, build_type, size_limit, limit_unit, fail_on_warning, variants_limit)
@@ -284,9 +269,9 @@ module Danger
         limit_size.kilobytes = 150 * 1024
       end
 
-      violation_count = AndroidUtils.violations_count(sorted_sizes, limit_size.bytes) 
-      
-      if violation_count>0
+      violation_count = AndroidUtils.violations_count(sorted_sizes, limit_size.bytes)
+
+      if violation_count.positive?
         if fail_on_warning
           failure "The size limit of #{size_limit} #{limit_unit.upcase} has been exceeded by #{violation_count} variants"
         else
@@ -307,7 +292,7 @@ module Danger
       exceed_counter = 1
       under_counter = 1
 
-      while(counter >= 0)
+      while counter >= 0
         variant = sorted_sizes[counter]
         is_violating = variant.max > limit_size.bytes ? '❌' : '✅'
         variant_report = "#{is_violating} | #{variant.sdk} | #{variant.abi} | #{variant.screen_density} | #{variant.language} | #{variant.max} |\n"
@@ -316,23 +301,21 @@ module Danger
           if exceed_counter <= variants_limit
             exceed_counter += 1
             exceed_size_report << variant_report
-          else 
+          else
             more_exceed_size_report << variant_report
           end
-        else
-          if under_counter <= variants_limit
-            under_counter += 1
-            under_size_report << variant_report
-          end
+        elsif under_counter <= variants_limit
+          under_counter += 1
+          under_size_report << variant_report
         end
 
-        counter-=1
+        counter -= 1
       end
 
       size_report = "# Android #{build_type} Size Report\n"
       size_report << "### Size limit = #{size_limit} #{limit_unit.upcase}\n\n"
 
-      if violation_count > 0
+      if violation_count.positive?
         size_report << "## Variants exceeding the size limit\n\n"
         size_report << exceed_size_report
         size_report << "\n"
@@ -351,7 +334,6 @@ module Danger
       size_report << "</details>\n"
 
       markdown size_report
-      
     end
 
     def generate_size_report_markdown(variants, build_type, size_limit, limit_unit, fail_on_warning)
@@ -371,9 +353,7 @@ module Danger
 
       flagged_variant_names = []
       variants.each do |variant|
-        if variant.app_size.uncompressed.value > limit_size.megabytes || variant.on_demand_resources_size.uncompressed.value > limit_size.megabytes
-          flagged_variant_names.append(variant.variant)
-        end
+        flagged_variant_names.append(variant.variant) if variant.app_size.uncompressed.value > limit_size.megabytes || variant.on_demand_resources_size.uncompressed.value > limit_size.megabytes
       end
 
       if flagged_variant_names.length.positive?

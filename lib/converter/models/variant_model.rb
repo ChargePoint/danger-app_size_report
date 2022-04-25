@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 require_relative '../helper/json_converter'
+
+# Variant Model
 class VariantModel < JSONConverter
   attr_reader :variant, :supported_variant_descriptors, :app_on_demand_resources_size, :app_size,
               :on_demand_resources_size

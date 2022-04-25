@@ -2,6 +2,7 @@
 
 require 'json'
 
+# Generate pretty JSON from list of variants
 class JSONConverter
   def to_json(_options = {})
     hash = {}

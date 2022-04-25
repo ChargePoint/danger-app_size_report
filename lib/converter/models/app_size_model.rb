@@ -1,6 +1,9 @@
 # frozen_string_literal: true
 
 require_relative '../helper/json_converter'
+
+# App Size Model
+# @example 'App size: 6.6 MB compressed, 12.9 MB uncompressed'
 class AppSizeModel < JSONConverter
   attr_reader :compressed, :uncompressed
 
@@ -16,6 +19,7 @@ class AppSizeModel < JSONConverter
   end
 end
 
+# Size Model
 class SizeModel < JSONConverter
   attr_reader :raw_value, :value, :unit
 

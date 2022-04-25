@@ -4,6 +4,7 @@ require_relative '../models/app_size_model'
 require_relative '../helper/memory_size'
 require_relative './model_parser'
 
+# Parser for App Size section of App Thinning Size Report
 class AppSizeParser < ModelParser
   attr_reader :standardized_unit
 
