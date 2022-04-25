@@ -4,6 +4,7 @@ require 'securerandom'
 require_relative '../models/variant_model'
 require_relative '../helper/result_factory'
 
+# Parses App Thinning Size Report in its entirety
 class ReportParser
   def self.parse(text)
     splitter_id = SecureRandom.uuid

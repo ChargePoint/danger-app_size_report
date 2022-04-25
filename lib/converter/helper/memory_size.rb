@@ -1,6 +1,7 @@
 # frozen_string_literal: false
 
 require_relative '../helper/json_converter'
+# Defines memory size object to be used to parse the App Thinning Size Report
 class MemorySize < JSONConverter
   attr_accessor :kilobytes
 

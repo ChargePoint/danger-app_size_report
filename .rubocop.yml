@@ -1,0 +1,20 @@
+AllCops:
+  NewCops: enable
+Layout/LineLength:
+  Max: 250
+Metrics/MethodLength:
+  Max: 65
+Metrics/BlockLength:
+  Max: 60
+Metrics/PerceivedComplexity:
+  Max: 20
+Metrics/CyclomaticComplexity:
+  Max: 15
+Metrics/AbcSize:
+  Max: 70
+Metrics/ClassLength:
+  Max: 200
+Metrics/ParameterLists:
+  Max: 11
+Style/Documentation:
+  AllowedConstants: [Danger]
