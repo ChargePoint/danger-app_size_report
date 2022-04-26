@@ -1,5 +1,6 @@
 AllCops:
   NewCops: enable
+  TargetRubyVersion: 2.6.0
 Layout/LineLength:
   Max: 250
 Metrics/MethodLength:
