@@ -247,7 +247,7 @@ module Danger
     private
 
     def create_temp_dir(temp_path)
-      Dir.mkdir $temp_path
+      Dir.mkdir temp_path
     end
 
     def clean_temp!(temp_path)
