@@ -25,7 +25,9 @@ Report **iOS** app size violations given a valid App Thinning Size Report. A val
 
 The list of variants with their sizes and any violations will be displayed in the PR report as seen below. Supported variant descriptors are placed under collapsibles.
 
-![App Thinning Size Report](Resources/Images/app_thinning_size_report.png?raw=true)
+<p align="center">
+  <img src="Resources/Images/app_thinning_size_report.png">
+</p>
 
 #### Parameters
 
