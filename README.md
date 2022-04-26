@@ -23,7 +23,7 @@ Report **iOS** app size violations given a valid App Thinning Size Report. A val
         fail_on_warning: false
     )
 
-The list of variants with their sizes and any violations will be displayed in the PR report as seen below. Supported variant descriptors are placed under collapsibles.
+The list of variants with their sizes and any violations will be displayed in the PR report as seen below. Supported variant descriptors are placed under collapsible sections.
 
 <p align="center">
   <img src="Resources/Images/app_thinning_size_report.png">
@@ -77,7 +77,12 @@ Report <b>Android</b> app size violations given a valid Android App Bundle (AAB)
         fail_on_warning: false
     )
 
-The top 25 violations will be displayed in the PR report with any remaining violations and variants under the size limit placed under collapsibles as seen below.
+The top 25 violations will be displayed in the PR report with any remaining violations and variants under the size limit placed under collapsible sections as seen below.
+
+<p align="center">
+  <img src="Resources/Images/android_instant_size_report.png">
+</p>
+
 #### Parameters
 
 - `aab_path` [String, required] Path to valid AAB file.
