@@ -10,7 +10,7 @@ A [Danger](https://github.com/danger/danger) plugin for reporting iOS and Androi
 
 ### `flag_ios_violations`
 
-Report app size violations given a valid App Thinning Size Report. A valid [App Thinning Size Report](https://developer.apple.com/documentation/xcode/reducing-your-app-s-size) must be passed to the plugin for accurate functionality.
+Report **iOS** app size violations given a valid App Thinning Size Report. A valid [App Thinning Size Report](https://developer.apple.com/documentation/xcode/reducing-your-app-s-size) must be passed to the plugin for accurate functionality.
 
     // Dangerfile
 
@@ -22,6 +22,12 @@ Report app size violations given a valid App Thinning Size Report. A valid [App 
         limit_unit: 'GB',
         fail_on_warning: false
     )
+
+The list of variants with their sizes and any violations will be displayed in the PR report as seen below. Supported variant descriptors are placed under collapsible sections.
+
+<p align="center">
+  <img src="Resources/Images/app_thinning_size_report.png">
+</p>
 
 #### Parameters
 
@@ -48,7 +54,7 @@ Returns a JSON string representation of the given iOS App Thinning Size Report.
 
 ### `flag_android_violations`
 
-Report <b>Android</b> app size violations given a valid Android App Bundle (AAB)
+Report <b>Android</b> app size violations given a valid Android App Bundle (AAB). 
 
     // Dangerfile
 
@@ -71,6 +77,12 @@ Report <b>Android</b> app size violations given a valid Android App Bundle (AAB)
         fail_on_warning: false
     )
 
+The top 25 violations will be displayed in the PR report with any remaining violations and variants under the size limit placed under collapsible sections as seen below.
+
+<p align="center">
+  <img src="Resources/Images/android_instant_size_report.png">
+</p>
+
 #### Parameters
 
 - `aab_path` [String, required] Path to valid AAB file.
@@ -87,10 +99,15 @@ Report <b>Android</b> app size violations given a valid Android App Bundle (AAB)
   - Supported values: 'KB', 'MB', 'GB'
 - `fail_on_warning` [Boolean, optional] [Default: false] Specify whether the PR should fail if one or more app variants exceed the given size limit. By default, the plugin issues a warning in this case.
 
-## Development
+## Contribute
 
-1. Clone this repo
+1. Fork this repo.
 2. Run `bundle install` to setup dependencies.
 3. Run `bundle exec rake spec` to run the tests.
 4. Use `bundle exec guard` to automatically have tests run as you make changes.
 5. Make your changes.
+6. Submit a pull request with your desired changes to be merged on review.
+
+## More Info
+
+[Open an issue](https://github.com/ChargePoint/danger-app_size_report/issues) if you have any questions!
