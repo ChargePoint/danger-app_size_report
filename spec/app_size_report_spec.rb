@@ -15,22 +15,33 @@ module Danger
       end
 
       it 'Converts App Size Report to JSON' do
-        json_string = @app_size_report.report_json("#{File.dirname(__dir__)}/Resources/App\ Thinning\ Size\ Report.txt")
+        json_string = @app_size_report.report_json("#{File.dirname(__dir__)}/Resources/App\ Thinning\ Size\ Report\ CPClip.txt")
 
         expected_json = File.read("#{File.dirname(__dir__)}/Resources/expectedReportJSON.json")
 
         expect(json_string).to eq(expected_json)
       end
 
-      it 'Generates IOS App Size Danger Report' do
+      it 'Generates IOS App Size Danger Report for Clip' do
         @app_size_report.flag_ios_violations(
-          "#{File.dirname(__dir__)}/Resources/App\ Thinning\ Size\ Report.txt",
+          "#{File.dirname(__dir__)}/Resources/App\ Thinning\ Size\ Report\ CPClip.txt",
           build_type: 'Clip',
           limit_size: 12,
           limit_unit: 'MB'
         )
 
         expect(@dangerfile.status_report[:warnings]).to eq(['The size limit of 10 MB has been exceeded by one or more variants'])
+      end
+
+      it 'Generates IOS App Size Danger Report for App' do
+        @app_size_report.flag_ios_violations(
+          "#{File.dirname(__dir__)}/Resources/App\ Thinning\ Size\ Report\ CP.txt",
+          build_type: 'App',
+          limit_size: 45,
+          limit_unit: 'MB'
+        )
+
+        expect(@dangerfile.status_report[:warnings]).to eq(['The size limit of 45 MB has been exceeded by one or more variants', 'The optimal cellular size limit of 200 MB has been exceeded by one or more variants'])
       end
 
       it 'Generates Android App Size Danger Report' do
