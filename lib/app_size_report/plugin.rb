@@ -129,8 +129,8 @@ module Danger
     #         Default: 'App'
     #         Supported values: 'App', 'Clip'
     #   @param [Numeric, optional] limit_size
-    #         Specify the app size limit. If the build type is set to 'Clip' and the 
-    #         specified app size limit exceeds 10 MB, the 10 MB limit will be enforced 
+    #         Specify the app size limit. If the build type is set to 'Clip' and the
+    #         specified app size limit exceeds 10 MB, the 10 MB limit will be enforced
     #         to meet Apple's App Clip size requirements.
     #         Default: 4
     #   @param [String, optional] limit_unit
@@ -204,8 +204,8 @@ module Danger
     #         Default: 'App'
     #         Supported values: 'App', 'Instant'
     #   @param [Numeric, optional] limit_size
-    #         Specify the app size limit. If the build type is set to 'Instant' and the 
-    #         specified app size limit exceeds 4 MB, the 4 MB limit will be enforced to 
+    #         Specify the app size limit. If the build type is set to 'Instant' and the
+    #         specified app size limit exceeds 4 MB, the 4 MB limit will be enforced to
     #         meet Android Instant App size requirements.
     #         Default: 150
     #   @param [String, optional] limit_unit
