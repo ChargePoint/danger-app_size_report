@@ -129,7 +129,9 @@ module Danger
     #         Default: 'App'
     #         Supported values: 'App', 'Clip'
     #   @param [Numeric, optional] limit_size
-    #         Specify the app size limit.
+    #         Specify the app size limit. If the build type is set to 'Clip' and the 
+    #         specified app size limit exceeds 10 MB, the 10 MB limit will be enforced 
+    #         to meet Apple's App Clip size requirements.
     #         Default: 4
     #   @param [String, optional] limit_unit
     #         Specific the unit for the given size limit.
@@ -186,23 +188,25 @@ module Danger
     #   @param [String, required] ks_path
     #         Path to valid signing key file.
     #   @param [String, required] ks_alias
-    #         Alias of signing key
+    #         Alias of signing key.
     #   @param [String, required] ks_password
-    #         Password of signing key
+    #         Password of signing key.
     #   @param [String, required] ks_alias_password
     #         Alias Password of signing key.
     #   @param [Array, optional] screen_densities
-    #         Array of screen densities to check APK size
+    #         Array of screen densities to check APK size.
     #         Default: ["MDPI", "HDPI", "XHDPI", "XXHDPI", "XXXHDPI"]
     #   @param [Array, optional] languages
-    #         Array of languages to check APK size
+    #         Array of languages to check APK size.
     #         Default: ["en"]
     #   @param [String, optional] build_type
     #         Specify whether the report corresponds to an App, Instant.
     #         Default: 'App'
     #         Supported values: 'App', 'Instant'
     #   @param [Numeric, optional] limit_size
-    #         Specify the app size limit.
+    #         Specify the app size limit. If the build type is set to 'Instant' and the 
+    #         specified app size limit exceeds 4 MB, the 4 MB limit will be enforced to 
+    #         meet Android Instant App size requirements.
     #         Default: 150
     #   @param [String, optional] limit_unit
     #         Specific the unit for the given size limit.
