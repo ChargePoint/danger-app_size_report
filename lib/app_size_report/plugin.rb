@@ -141,8 +141,8 @@ module Danger
     #         Supported values: 'KB', 'MB', 'GB'
     #   @param [Boolean, optional] fail_on_warning
     #         Specify whether the PR should fail if one or more app variants
-    #         exceed the given size limit. By default, the plugin issues a
-    #         warning in this case.
+    #         exceed the given size limit. By default, the plugin issues
+    #         a warning in this case.
     #         Default: 'false'
     # @return   [void]
     #
