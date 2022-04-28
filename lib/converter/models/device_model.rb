@@ -2,8 +2,8 @@
 
 require_relative '../helper/json_converter'
 
-# Device Model
-# @example 'device: iPhone10,3, os-version: 14.0'
+# Device Model.
+# Example: 'device: iPhone10,3, os-version: 14.0'
 class DeviceModel < JSONConverter
   attr_reader :device, :os_version
 

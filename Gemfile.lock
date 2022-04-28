@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    danger-app_size_report (0.0.4)
+    danger-app_size_report (1.0.0)
       danger-plugin-api (~> 1.0)
 
 GEM

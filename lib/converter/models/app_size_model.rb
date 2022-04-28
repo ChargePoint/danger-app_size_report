@@ -2,8 +2,8 @@
 
 require_relative '../helper/json_converter'
 
-# App Size Model
-# @example 'App size: 6.6 MB compressed, 12.9 MB uncompressed'
+# App Size Model.
+# Example: 'App size: 6.6 MB compressed, 12.9 MB uncompressed'
 class AppSizeModel < JSONConverter
   attr_reader :compressed, :uncompressed
 

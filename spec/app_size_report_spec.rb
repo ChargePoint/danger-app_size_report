@@ -26,7 +26,7 @@ module Danger
         @app_size_report.flag_ios_violations(
           "#{File.dirname(__dir__)}/Resources/App\ Thinning\ Size\ Report.txt",
           build_type: 'Clip',
-          size_limit: 12,
+          limit_size: 12,
           limit_unit: 'MB'
         )
 
@@ -43,7 +43,7 @@ module Danger
           screen_densities: %w[MDPI HDPI XHDPI XXHDPI XXXHDPI],
           languages: %w[en de da es fr it nb nl sv],
           build_type: 'Instant',
-          size_limit: 1.459,
+          limit_size: 1.459,
           limit_unit: 'MB'
         )
 

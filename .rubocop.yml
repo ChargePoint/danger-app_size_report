@@ -10,7 +10,7 @@ Metrics/BlockLength:
 Metrics/PerceivedComplexity:
   Max: 20
 Metrics/CyclomaticComplexity:
-  Max: 15
+  Max: 20
 Metrics/AbcSize:
   Max: 70
 Metrics/ClassLength:
