@@ -1,0 +1,218 @@
+
+App Thinning Size Report for All Variants of CP
+
+Variant: com.coulomb.ChargePoint-0F621BC7-39A7-4E09-B6B4-9DD22F886611.ipa
+Supported variant descriptors: [device: iPad6,8, os-version: 12.2], [device: iPad4,4, os-version: 12.2], [device: iPad5,2, os-version: 12.2], [device: iPad7,5, os-version: 12.2], [device: iPad7,6, os-version: 12.2], [device: iPad4,5, os-version: 12.2], [device: iPad4,8, os-version: 12.2], [device: iPad4,2, os-version: 12.2], [device: iPad4,6, os-version: 12.2], [device: iPad4,1, os-version: 12.2], [device: iPad4,3, os-version: 12.2], [device: iPad4,9, os-version: 12.2], [device: iPad4,7, os-version: 12.2], [device: iPad5,1, os-version: 12.2], [device: iPad6,7, os-version: 12.2], [device: iPad5,3, os-version: 12.2], [device: iPad5,4, os-version: 12.2], [device: iPad6,11, os-version: 12.2], and [device: iPad6,12, os-version: 12.2]
+App + On Demand Resources size: 13.1 MB compressed, 31.3 MB uncompressed
+App size: 13.1 MB compressed, 31.3 MB uncompressed
+On Demand Resources size: Zero KB compressed, Zero KB uncompressed
+
+
+Variant: com.coulomb.ChargePoint-174FD93A-9E4E-4F9A-9087-27B87F10BA73.ipa
+Supported variant descriptors: [device: iPod9,1, os-version: 14.0], [device: iPod9,1, os-version: 13.0], and [device: iPod9,1, os-version: 15.0]
+App + On Demand Resources size: 13 MB compressed, 31.1 MB uncompressed
+App size: 13 MB compressed, 31.1 MB uncompressed
+On Demand Resources size: Zero KB compressed, Zero KB uncompressed
+
+
+Variant: com.coulomb.ChargePoint-278634B1-ADB2-426F-B246-EE96AA618F04.ipa
+Supported variant descriptors: [device: iPad11,1, os-version: 12.2], [device: iPad6,3, os-version: 12.2], [device: iPad8,6, os-version: 12.2], [device: iPad11,3, os-version: 12.2], [device: iPad7,4, os-version: 12.2], [device: iPad7,2, os-version: 12.2], [device: iPad8,7, os-version: 12.2], [device: iPad8,2, os-version: 12.2], [device: iPad8,8, os-version: 12.2], [device: iPad7,3, os-version: 12.2], [device: iPad8,1, os-version: 12.2], [device: iPad11,2, os-version: 12.2], [device: iPad8,5, os-version: 12.2], [device: iPad8,3, os-version: 12.2], [device: iPad8,4, os-version: 12.2], [device: iPad11,4, os-version: 12.2], [device: iPad7,1, os-version: 12.2], and [device: iPad6,4, os-version: 12.2]
+App + On Demand Resources size: 13.1 MB compressed, 31.3 MB uncompressed
+App size: 13.1 MB compressed, 31.3 MB uncompressed
+On Demand Resources size: Zero KB compressed, Zero KB uncompressed
+
+
+Variant: com.coulomb.ChargePoint-319AF157-5859-40A3-9B93-C4D508F7FD8E.ipa
+Supported variant descriptors: [device: iPhone8,1, os-version: 14.0], [device: iPhone8,1, os-version: 13.0], [device: iPhone8,4, os-version: 13.0], [device: iPhone8,1, os-version: 15.0], [device: iPhone8,4, os-version: 14.0], and [device: iPhone8,4, os-version: 15.0]
+App + On Demand Resources size: 13.2 MB compressed, 31.4 MB uncompressed
+App size: 13.2 MB compressed, 31.4 MB uncompressed
+On Demand Resources size: Zero KB compressed, Zero KB uncompressed
+
+
+Variant: com.coulomb.ChargePoint-3520FD6F-7E39-49A1-A497-9DBE73E3CCF3.ipa
+Supported variant descriptors: [device: Watch6,7, os-version: 8.0] and [device: Watch6,9, os-version: 8.0]
+App + On Demand Resources size: 1.5 MB compressed, 4 MB uncompressed
+App size: 1.5 MB compressed, 4 MB uncompressed
+On Demand Resources size: Zero KB compressed, Zero KB uncompressed
+
+
+Variant: com.coulomb.ChargePoint-376FB823-0A1A-49EF-B671-090463D499A0.ipa
+Supported variant descriptors: [device: iPhone7,1, os-version: 12.0] and [device: iPhone8,2, os-version: 12.0]
+App + On Demand Resources size: 19.4 MB compressed, 46.8 MB uncompressed
+App size: 19.4 MB compressed, 46.8 MB uncompressed
+On Demand Resources size: Zero KB compressed, Zero KB uncompressed
+
+
+Variant: com.coulomb.ChargePoint-452B5133-09CC-4C39-95B9-A7773BC0056E.ipa
+Supported variant descriptors: [device: iPhone10,4, os-version: 12.0], [device: iPhone9,1, os-version: 12.0], [device: iPhone9,3, os-version: 12.0], and [device: iPhone10,1, os-version: 12.0]
+App + On Demand Resources size: 18 MB compressed, 45.4 MB uncompressed
+App size: 18 MB compressed, 45.4 MB uncompressed
+On Demand Resources size: Zero KB compressed, Zero KB uncompressed
+
+
+Variant: com.coulomb.ChargePoint-47FC97BE-599B-48F7-B844-8A6F8E61C3B9.ipa
+Supported variant descriptors: [device: iPad7,2, os-version: 12.0], [device: iPad8,6, os-version: 12.0], [device: iPad8,4, os-version: 12.0], [device: iPad8,5, os-version: 12.0], [device: iPad7,4, os-version: 12.0], [device: iPad7,3, os-version: 12.0], [device: iPad8,8, os-version: 12.0], [device: iPad6,4, os-version: 12.0], [device: iPad8,7, os-version: 12.0], [device: iPad8,3, os-version: 12.0], [device: iPad7,1, os-version: 12.0], [device: iPad8,2, os-version: 12.0], [device: iPad6,3, os-version: 12.0], and [device: iPad8,1, os-version: 12.0]
+App + On Demand Resources size: 15.5 MB compressed, 38.4 MB uncompressed
+App size: 15.5 MB compressed, 38.4 MB uncompressed
+On Demand Resources size: Zero KB compressed, Zero KB uncompressed
+
+
+Variant: com.coulomb.ChargePoint-4ACDED96-0276-4C4E-8297-7CDCEAAB9B08.ipa
+Supported variant descriptors: [device: iPhone11,6, os-version: 12.0], [device: iPhone10,2, os-version: 12.0], [device: iPhone10,5, os-version: 12.0], [device: iPhone11,4, os-version: 12.0], [device: iPhone10,6, os-version: 12.0], [device: iPhone9,2, os-version: 12.0], [device: iPhone9,4, os-version: 12.0], [device: iPhone10,3, os-version: 12.0], and [device: iPhone11,2, os-version: 12.0]
+App + On Demand Resources size: 19.4 MB compressed, 46.8 MB uncompressed
+App size: 19.4 MB compressed, 46.8 MB uncompressed
+On Demand Resources size: Zero KB compressed, Zero KB uncompressed
+
+
+Variant: com.coulomb.ChargePoint-53B11A8A-8555-4E56-BA5F-F9B07CFBFF4D.ipa
+Supported variant descriptors: [device: iPod7,1, os-version: 12.2] and [device: iPod9,1, os-version: 12.2]
+App + On Demand Resources size: 15.4 MB compressed, 38 MB uncompressed
+App size: 15.4 MB compressed, 38 MB uncompressed
+On Demand Resources size: Zero KB compressed, Zero KB uncompressed
+
+
+Variant: com.coulomb.ChargePoint-61A9F30A-EC77-4D83-B822-0C248C27F457.ipa
+Supported variant descriptors: [device: iPhone8,2, os-version: 14.0], [device: iPhone8,2, os-version: 15.0], and [device: iPhone8,2, os-version: 13.0]
+App + On Demand Resources size: 14.5 MB compressed, 32.7 MB uncompressed
+App size: 14.5 MB compressed, 32.7 MB uncompressed
+On Demand Resources size: Zero KB compressed, Zero KB uncompressed
+
+
+Variant: com.coulomb.ChargePoint-6D0FF167-145A-41EC-B042-82FAD5BC0C0F.ipa
+Supported variant descriptors: [device: iPad7,2, os-version: 15.0], [device: iPad13,4, os-version: 15.0], [device: iPad8,11, os-version: 15.0], [device: iPad13,10, os-version: 15.0], [device: iPad8,5, os-version: 15.0], [device: iPad11,1, os-version: 13.0], [device: iPad13,1, os-version: 14.0], [device: iPad13,5, os-version: 14.0], [device: iPad8,12, os-version: 14.0], [device: iPad11,1, os-version: 14.0], [device: iPad8,11, os-version: 13.0], [device: iPad8,1, os-version: 15.0], [device: iPad8,7, os-version: 15.0], [device: iPad13,5, os-version: 15.0], [device: iPad13,6, os-version: 15.0], [device: iPad8,11, os-version: 14.0], [device: iPad13,4, os-version: 14.0], [device: iPad8,7, os-version: 13.0], [device: iPad8,2, os-version: 14.0], [device: MacFamily20,1, os-version: 14.0], [device: iPad7,3, os-version: 14.0], [device: iPad11,4, os-version: 14.0], [device: iPad8,5, os-version: 14.0], [device: iPad13,7, os-version: 14.0], [device: iPad13,7, os-version: 15.0], [device: iPad14,2, os-version: 15.0], [device: iPad8,10, os-version: 13.0], [device: iPad13,8, os-version: 15.0], [device: iPad6,4, os-version: 13.0], [device: iPad6,3, os-version: 15.0], [device: iPad7,1, os-version: 13.0], [device: iPad7,3, os-version: 15.0], [device: iPad8,12, os-version: 13.0], [device: iPad8,6, os-version: 14.0], [device: iPad11,3, os-version: 15.0], [device: iPad6,4, os-version: 14.0], [device: iPad13,11, os-version: 14.0], [device: iPad11,1, os-version: 15.0], [device: iPad8,4, os-version: 13.0], [device: iPad8,10, os-version: 14.0], [device: iPad8,10, os-version: 15.0], [device: iPad11,3, os-version: 13.0], [device: iPad7,4, os-version: 14.0], [device: iPad11,2, os-version: 13.0], [device: iPad8,8, os-version: 13.0], [device: iPad8,9, os-version: 14.0], [device: iPad8,9, os-version: 13.0], [device: iPad7,2, os-version: 14.0], [device: iPad7,2, os-version: 13.0], [device: iPad13,11, os-version: 15.0], [device: iPad13,9, os-version: 14.0], [device: iPad13,9, os-version: 15.0], [device: iPad8,3, os-version: 13.0], [device: iPad8,8, os-version: 14.0], [device: iPad8,7, os-version: 14.0], [device: iPad8,4, os-version: 15.0], [device: iPad8,8, os-version: 15.0], [device: iPad8,1, os-version: 13.0], [device: iPad7,3, os-version: 13.0], [device: iPad13,6, os-version: 14.0], [device: iPad6,3, os-version: 13.0], [device: iPad13,10, os-version: 14.0], [device: iPad14,1, os-version: 15.0], [device: iPad8,2, os-version: 13.0], [device: iPad7,1, os-version: 15.0], [device: MacFamily20,1, os-version: 15.0], [device: iPad11,2, os-version: 15.0], [device: iPad13,1, os-version: 15.0], [device: iPad8,12, os-version: 15.0], [device: iPad11,4, os-version: 15.0], [device: iPad11,4, os-version: 13.0], [device: iPad8,2, os-version: 15.0], [device: iPad8,3, os-version: 14.0], [device: iPad13,2, os-version: 14.0], [device: iPad8,1, os-version: 14.0], [device: iPad8,9, os-version: 15.0], [device: iPad6,3, os-version: 14.0], [device: iPad11,2, os-version: 14.0], [device: iPad13,8, os-version: 14.0], [device: iPad6,4, os-version: 15.0], [device: iPad8,5, os-version: 13.0], [device: iPad7,4, os-version: 15.0], [device: iPad8,3, os-version: 15.0], [device: iPad8,6, os-version: 15.0], [device: iPad13,2, os-version: 15.0], [device: iPad7,4, os-version: 13.0], [device: iPad8,6, os-version: 13.0], [device: iPad8,4, os-version: 14.0], [device: iPad11,3, os-version: 14.0], and [device: iPad7,1, os-version: 14.0]
+App + On Demand Resources size: 13 MB compressed, 31.2 MB uncompressed
+App size: 13 MB compressed, 31.2 MB uncompressed
+On Demand Resources size: Zero KB compressed, Zero KB uncompressed
+
+
+Variant: com.coulomb.ChargePoint-74332B21-5BDF-46C5-A17F-FC6E030C39A9.ipa
+Supported variant descriptors: [device: iPhone14,5, os-version: 15.0], [device: iPhone10,2, os-version: 15.0], [device: iPhone10,6, os-version: 14.0], [device: iPhone12,3, os-version: 15.0], [device: iPhone12,5, os-version: 13.0], [device: iPhone10,2, os-version: 14.0], [device: iPhone13,4, os-version: 14.0], [device: iPhone10,3, os-version: 13.0], [device: iPhone13,1, os-version: 14.0], [device: iPhone11,2, os-version: 15.0], [device: iPhone13,3, os-version: 15.0], [device: iPhone11,4, os-version: 15.0], [device: iPhone9,2, os-version: 14.0], [device: iPhone10,5, os-version: 13.0], [device: iPhone14,3, os-version: 15.0], [device: iPhone11,4, os-version: 13.0], [device: iPhone10,6, os-version: 15.0], [device: iPhone10,3, os-version: 15.0], [device: iPhone13,2, os-version: 15.0], [device: iPhone10,2, os-version: 13.0], [device: iPhone12,5, os-version: 15.0], [device: iPhone9,4, os-version: 15.0], [device: iPhone9,2, os-version: 13.0], [device: iPhone13,3, os-version: 14.0], [device: iPhone11,6, os-version: 13.0], [device: iPhone12,3, os-version: 14.0], [device: iPhone13,2, os-version: 14.0], [device: iPhone9,4, os-version: 14.0], [device: iPhone13,4, os-version: 15.0], [device: iPhone14,4, os-version: 15.0], [device: iPhone12,3, os-version: 13.0], [device: iPhone11,2, os-version: 14.0], [device: iPhone10,5, os-version: 14.0], [device: iPhone13,1, os-version: 15.0], [device: iPhone10,3, os-version: 14.0], [device: iPhone11,4, os-version: 14.0], [device: iPhone14,2, os-version: 15.0], [device: iPhone11,2, os-version: 13.0], [device: iPhone12,5, os-version: 14.0], [device: iPhone11,6, os-version: 15.0], [device: iPhone10,6, os-version: 13.0], [device: iPhone10,5, os-version: 15.0], [device: iPhone9,2, os-version: 15.0], [device: iPhone9,4, os-version: 13.0], and [device: iPhone11,6, os-version: 14.0]
+App + On Demand Resources size: 14.5 MB compressed, 32.7 MB uncompressed
+App size: 14.5 MB compressed, 32.7 MB uncompressed
+On Demand Resources size: Zero KB compressed, Zero KB uncompressed
+
+
+Variant: com.coulomb.ChargePoint-7D05CC6B-6D34-49D7-8933-E7493E5C0758.ipa
+Supported variant descriptors: [device: Watch5,11, os-version: 8.0], [device: Watch4,3, os-version: 7.0], [device: Watch5,9, os-version: 7.0], [device: Watch4,3, os-version: 6.0], [device: Watch4,1, os-version: 8.0], [device: Watch4,1, os-version: 7.0], [device: Watch5,11, os-version: 7.0], [device: Watch5,3, os-version: 6.0], [device: Watch5,9, os-version: 8.0], [device: Watch6,3, os-version: 8.0], [device: Watch5,1, os-version: 6.0], [device: Watch6,3, os-version: 7.0], [device: Watch6,1, os-version: 8.0], [device: Watch5,1, os-version: 7.0], [device: Watch5,3, os-version: 7.0], [device: Watch4,1, os-version: 6.0], [device: Watch4,3, os-version: 8.0], [device: Watch5,1, os-version: 8.0], [device: Watch5,3, os-version: 8.0], and [device: Watch6,1, os-version: 7.0]
+App + On Demand Resources size: 1.4 MB compressed, 3.9 MB uncompressed
+App size: 1.4 MB compressed, 3.9 MB uncompressed
+On Demand Resources size: Zero KB compressed, Zero KB uncompressed
+
+
+Variant: com.coulomb.ChargePoint-7DBC3582-3CA2-464D-88D0-754632DEC0AE.ipa
+Supported variant descriptors: [device: iPod7,1, os-version: 12.0]
+App + On Demand Resources size: 17.8 MB compressed, 45.1 MB uncompressed
+App size: 17.8 MB compressed, 45.1 MB uncompressed
+On Demand Resources size: Zero KB compressed, Zero KB uncompressed
+
+
+Variant: com.coulomb.ChargePoint-896BC17F-1C43-46E5-B081-7EA2EFC66960.ipa
+Supported variant descriptors: [device: iPhone10,1, os-version: 12.2], [device: iPhone9,1, os-version: 12.2], [device: iPhone10,4, os-version: 12.2], and [device: iPhone9,3, os-version: 12.2]
+App + On Demand Resources size: 15.6 MB compressed, 38.3 MB uncompressed
+App size: 15.6 MB compressed, 38.3 MB uncompressed
+On Demand Resources size: Zero KB compressed, Zero KB uncompressed
+
+
+Variant: com.coulomb.ChargePoint-8F07BEDD-0AA2-4ACB-A8E8-6BD7F11574F0.ipa
+Supported variant descriptors: [device: iPhone11,8, os-version: 12.2]
+App + On Demand Resources size: 15.7 MB compressed, 38.3 MB uncompressed
+App size: 15.7 MB compressed, 38.3 MB uncompressed
+On Demand Resources size: Zero KB compressed, Zero KB uncompressed
+
+
+Variant: com.coulomb.ChargePoint-93A9CA61-2990-4E41-8CAF-89D6DF8F6107.ipa
+Supported variant descriptors: [device: iPhone11,8, os-version: 12.0]
+App + On Demand Resources size: 18 MB compressed, 45.4 MB uncompressed
+App size: 18 MB compressed, 45.4 MB uncompressed
+On Demand Resources size: Zero KB compressed, Zero KB uncompressed
+
+
+Variant: com.coulomb.ChargePoint-98CBE270-E59C-44AD-A526-F3F759CB2020.ipa
+Supported variant descriptors: [device: iPhone9,3, os-version: 15.0], [device: iPhone10,4, os-version: 15.0], [device: iPhone12,8, os-version: 15.0], [device: iPhone10,4, os-version: 14.0], [device: iPhone12,8, os-version: 13.0], [device: iPhone9,1, os-version: 14.0], [device: iPhone10,1, os-version: 15.0], [device: iPhone9,1, os-version: 13.0], [device: iPhone9,3, os-version: 14.0], [device: iPhone10,1, os-version: 13.0], [device: iPhone9,3, os-version: 13.0], [device: iPhone12,8, os-version: 14.0], [device: iPhone10,4, os-version: 13.0], [device: iPhone10,1, os-version: 14.0], and [device: iPhone9,1, os-version: 15.0]
+App + On Demand Resources size: 13.2 MB compressed, 31.4 MB uncompressed
+App size: 13.2 MB compressed, 31.4 MB uncompressed
+On Demand Resources size: Zero KB compressed, Zero KB uncompressed
+
+
+Variant: com.coulomb.ChargePoint-AD119811-CF14-413D-AE43-366F8E350D61.ipa
+Supported variant descriptors: [device: Watch3,4, os-version: 8.0], [device: Watch2,4, os-version: 6.0], [device: Watch3,2, os-version: 7.0], [device: Watch2,7, os-version: 6.0], [device: Watch3,2, os-version: 8.0], [device: Watch3,2, os-version: 6.0], [device: Watch3,4, os-version: 6.0], and [device: Watch3,4, os-version: 7.0]
+App + On Demand Resources size: 1.5 MB compressed, 3.9 MB uncompressed
+App size: 1.5 MB compressed, 3.9 MB uncompressed
+On Demand Resources size: Zero KB compressed, Zero KB uncompressed
+
+
+Variant: com.coulomb.ChargePoint-B2E7FEEC-7D9D-45E5-9F59-20BB0EF36E45.ipa
+Supported variant descriptors: [device: iPhone8,4, os-version: 12.0], [device: iPhone6,1, os-version: 12.0], [device: iPhone6,2, os-version: 12.0], [device: iPhone8,1, os-version: 12.0], and [device: iPhone7,2, os-version: 12.0]
+App + On Demand Resources size: 18 MB compressed, 45.4 MB uncompressed
+App size: 18 MB compressed, 45.4 MB uncompressed
+On Demand Resources size: Zero KB compressed, Zero KB uncompressed
+
+
+Variant: com.coulomb.ChargePoint-BE970F6E-EB3B-40EA-8592-EABC7ADDEE44.ipa
+Supported variant descriptors: [device: iPhone10,3, os-version: 12.2], [device: iPhone11,4, os-version: 12.2], [device: iPhone11,6, os-version: 12.2], [device: iPhone9,2, os-version: 12.2], [device: iPhone11,2, os-version: 12.2], [device: iPhone10,6, os-version: 12.2], [device: iPhone9,4, os-version: 12.2], [device: iPhone10,5, os-version: 12.2], and [device: iPhone10,2, os-version: 12.2]
+App + On Demand Resources size: 17 MB compressed, 39.7 MB uncompressed
+App size: 17 MB compressed, 39.7 MB uncompressed
+On Demand Resources size: Zero KB compressed, Zero KB uncompressed
+
+
+Variant: com.coulomb.ChargePoint-D89DBC0E-1DC9-4EC5-BC3D-35F03496EA42.ipa
+Supported variant descriptors: [device: iPhone8,1, os-version: 12.2], [device: iPhone8,4, os-version: 12.2], [device: iPhone6,1, os-version: 12.2], [device: iPhone6,2, os-version: 12.2], and [device: iPhone7,2, os-version: 12.2]
+App + On Demand Resources size: 15.6 MB compressed, 38.3 MB uncompressed
+App size: 15.6 MB compressed, 38.3 MB uncompressed
+On Demand Resources size: Zero KB compressed, Zero KB uncompressed
+
+
+Variant: com.coulomb.ChargePoint-E0CC1B66-C636-4873-86C6-E1146D422097.ipa
+Supported variant descriptors: [device: Watch6,6, os-version: 8.0] and [device: Watch6,8, os-version: 8.0]
+App + On Demand Resources size: 1.4 MB compressed, 3.9 MB uncompressed
+App size: 1.4 MB compressed, 3.9 MB uncompressed
+On Demand Resources size: Zero KB compressed, Zero KB uncompressed
+
+
+Variant: com.coulomb.ChargePoint-E45A276E-8E53-4778-A5C0-17BA70702DAF.ipa
+Supported variant descriptors: [device: iPad5,2, os-version: 14.0], [device: iPad6,7, os-version: 14.0], [device: iPad5,1, os-version: 13.0], [device: iPad6,7, os-version: 13.0], [device: iPad5,2, os-version: 13.0], [device: iPad5,3, os-version: 13.0], [device: iPad6,12, os-version: 13.0], [device: iPad6,12, os-version: 14.0], [device: iPad6,8, os-version: 14.0], [device: iPad7,6, os-version: 14.0], [device: iPad5,1, os-version: 14.0], [device: iPad7,6, os-version: 13.0], [device: iPad5,4, os-version: 13.0], [device: iPad12,2, os-version: 15.0], [device: iPad6,12, os-version: 15.0], [device: iPad7,5, os-version: 15.0], [device: iPad7,11, os-version: 13.0], [device: iPad6,11, os-version: 14.0], [device: iPad7,6, os-version: 15.0], [device: iPad6,8, os-version: 15.0], [device: iPad12,1, os-version: 15.0], [device: iPad5,1, os-version: 15.0], [device: iPad11,7, os-version: 14.0], [device: iPad11,6, os-version: 15.0], [device: iPad11,7, os-version: 15.0], [device: iPad7,11, os-version: 14.0], [device: iPad5,3, os-version: 14.0], [device: iPad7,12, os-version: 13.0], [device: iPad6,11, os-version: 13.0], [device: iPad6,7, os-version: 15.0], [device: iPad7,5, os-version: 14.0], [device: iPad5,2, os-version: 15.0], [device: iPad7,11, os-version: 15.0], [device: iPad7,12, os-version: 15.0], [device: iPad7,5, os-version: 13.0], [device: iPad11,6, os-version: 14.0], [device: iPad5,4, os-version: 14.0], [device: iPad5,3, os-version: 15.0], [device: iPad5,4, os-version: 15.0], [device: iPad6,11, os-version: 15.0], [device: iPad6,8, os-version: 13.0], and [device: iPad7,12, os-version: 14.0]
+App + On Demand Resources size: 13 MB compressed, 31.2 MB uncompressed
+App size: 13 MB compressed, 31.2 MB uncompressed
+On Demand Resources size: Zero KB compressed, Zero KB uncompressed
+
+
+Variant: com.coulomb.ChargePoint-E525F5DD-7DDD-4F12-BFE5-75AD0C60F6E8.ipa
+Supported variant descriptors: [device: iPhone8,2, os-version: 12.2] and [device: iPhone7,1, os-version: 12.2]
+App + On Demand Resources size: 17 MB compressed, 39.7 MB uncompressed
+App size: 17 MB compressed, 39.7 MB uncompressed
+On Demand Resources size: Zero KB compressed, Zero KB uncompressed
+
+
+Variant: com.coulomb.ChargePoint-E894449A-9C96-4CE2-9F5E-BC9C03A0A38B.ipa
+Supported variant descriptors: [device: iPad7,5, os-version: 12.0], [device: iPad4,7, os-version: 12.0], [device: iPad5,1, os-version: 12.0], [device: iPad4,2, os-version: 12.0], [device: iPad7,6, os-version: 12.0], [device: iPad6,8, os-version: 12.0], [device: iPad6,7, os-version: 12.0], [device: iPad4,9, os-version: 12.0], [device: iPad4,5, os-version: 12.0], [device: iPad6,12, os-version: 12.0], [device: iPad4,3, os-version: 12.0], [device: iPad4,4, os-version: 12.0], [device: iPad4,8, os-version: 12.0], [device: iPad5,4, os-version: 12.0], [device: iPad4,6, os-version: 12.0], [device: iPad4,1, os-version: 12.0], [device: iPad5,2, os-version: 12.0], [device: iPad5,3, os-version: 12.0], and [device: iPad6,11, os-version: 12.0]
+App + On Demand Resources size: 15.5 MB compressed, 38.4 MB uncompressed
+App size: 15.5 MB compressed, 38.4 MB uncompressed
+On Demand Resources size: Zero KB compressed, Zero KB uncompressed
+
+
+Variant: com.coulomb.ChargePoint-EE074FC2-36D8-4643-AF58-BD1949768961.ipa
+Supported variant descriptors: [device: Watch4,4, os-version: 7.0], [device: Watch6,4, os-version: 7.0], [device: Watch4,4, os-version: 8.0], [device: Watch5,4, os-version: 8.0], [device: Watch6,4, os-version: 8.0], [device: Watch5,12, os-version: 7.0], [device: Watch6,2, os-version: 7.0], [device: Watch5,2, os-version: 8.0], [device: Watch5,2, os-version: 7.0], [device: Watch5,12, os-version: 8.0], [device: Watch5,10, os-version: 8.0], [device: Watch4,2, os-version: 6.0], [device: Watch4,4, os-version: 6.0], [device: Watch4,2, os-version: 7.0], [device: Watch5,10, os-version: 7.0], [device: Watch6,2, os-version: 8.0], [device: Watch4,2, os-version: 8.0], [device: Watch5,2, os-version: 6.0], [device: Watch5,4, os-version: 6.0], and [device: Watch5,4, os-version: 7.0]
+App + On Demand Resources size: 1.4 MB compressed, 3.9 MB uncompressed
+App size: 1.4 MB compressed, 3.9 MB uncompressed
+On Demand Resources size: Zero KB compressed, Zero KB uncompressed
+
+
+Variant: com.coulomb.ChargePoint-FAE180F4-4531-47E6-B783-E34BC64D57CC.ipa
+Supported variant descriptors: [device: Watch3,3, os-version: 6.0], [device: Watch3,1, os-version: 7.0], [device: Watch2,3, os-version: 6.0], [device: Watch3,1, os-version: 8.0], [device: Watch3,3, os-version: 7.0], [device: Watch3,3, os-version: 8.0], [device: Watch3,1, os-version: 6.0], and [device: Watch2,6, os-version: 6.0]
+App + On Demand Resources size: 1.5 MB compressed, 3.9 MB uncompressed
+App size: 1.5 MB compressed, 3.9 MB uncompressed
+On Demand Resources size: Zero KB compressed, Zero KB uncompressed
+
+
+Variant: com.coulomb.ChargePoint-FD582A8B-E3DD-4753-A1A0-01B6F7783355.ipa
+Supported variant descriptors: [device: iPhone12,1, os-version: 15.0], [device: iPhone12,1, os-version: 13.0], [device: iPhone11,8, os-version: 14.0], [device: iPhone11,8, os-version: 15.0], [device: iPhone11,8, os-version: 13.0], and [device: iPhone12,1, os-version: 14.0]
+App + On Demand Resources size: 13.2 MB compressed, 31.4 MB uncompressed
+App size: 13.2 MB compressed, 31.4 MB uncompressed
+On Demand Resources size: Zero KB compressed, Zero KB uncompressed
+
+
+Variant: com.coulomb.ChargePoint.ipa
+Supported variant descriptors: Universal
+App + On Demand Resources size: 28.9 MB compressed, 57.8 MB uncompressed
+App size: 28.9 MB compressed, 207.8 MB uncompressed
+On Demand Resources size: Zero KB compressed, Zero KB uncompressed

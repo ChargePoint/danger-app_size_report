@@ -12,9 +12,9 @@ Metrics/PerceivedComplexity:
 Metrics/CyclomaticComplexity:
   Max: 20
 Metrics/AbcSize:
-  Max: 70
+  Max: 90
 Metrics/ClassLength:
-  Max: 200
+  Max: 220
 Metrics/ParameterLists:
   Max: 11
 Style/Documentation:

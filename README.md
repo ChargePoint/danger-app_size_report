@@ -23,7 +23,7 @@ Report **iOS** app size violations given a valid App Thinning Size Report. A val
         fail_on_warning: false
     )
 
-The list of variants with their sizes and any violations will be displayed in the PR report as seen below. Supported variant descriptors are placed under collapsible sections.
+The list of variants with their sizes and any violations will be displayed in the PR report as seen below. Additionally, the report will include warnings for any variants that exceed the optimal size limit for cellular downloads (200 MB). Supported variant descriptors are placed under collapsible sections. 
 
 <p align="center">
   <img src="Resources/Images/app_thinning_size_report.png">

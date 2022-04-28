@@ -121,6 +121,8 @@ module Danger
   #
   class DangerAppSizeReport < Plugin
     # Reports IOS app size violations given a valid App Thinning Size Report.
+    # The plugin also warns users about variants that exceed the optimal size
+    # limit for cellular downloads (200 MB).
     # @overload flag_ios_violations(report_path, build_type, limit_size, limit_unit, fail_on_warning)
     #   @param [String, required] report_path
     #         Path to valid App Thinning Size Report text file.
@@ -139,8 +141,8 @@ module Danger
     #         Supported values: 'KB', 'MB', 'GB'
     #   @param [Boolean, optional] fail_on_warning
     #         Specify whether the PR should fail if one or more app variants
-    #         exceed the given size limit. By default, the plugin issues
-    #         a warning in this case.
+    #         exceed the given size limit. By default, the plugin issues a
+    #         warning in this case.
     #         Default: 'false'
     # @return   [void]
     #
@@ -380,6 +382,7 @@ module Danger
 
     def generate_size_report_markdown(variants, build_type, size_limit, limit_unit, fail_on_warning)
       limit_size = MemorySize.new("#{size_limit}#{limit_unit}")
+      cellular_limit_size = MemorySize.new('200 MB')
 
       if build_type == 'Clip' && limit_size.megabytes > 10
         message "The size limit was set to 10 MB as the given limit of #{size_limit} #{limit_unit} exceeds Apple's App Clip size restrictions"
@@ -394,8 +397,10 @@ module Danger
       end
 
       flagged_variant_names = []
+      flagged_cellular_variant_names = []
       variants.each do |variant|
         flagged_variant_names.append(variant.variant) if variant.app_size.uncompressed.value > limit_size.megabytes || variant.on_demand_resources_size.uncompressed.value > limit_size.megabytes
+        flagged_cellular_variant_names.append(variant.variant) if variant.app_size.uncompressed.value > cellular_limit_size.megabytes || variant.on_demand_resources_size.uncompressed.value > cellular_limit_size.megabytes
       end
 
       if flagged_variant_names.length.positive?
@@ -406,21 +411,25 @@ module Danger
         end
       end
 
+      warn 'The optimal cellular size limit of 200 MB has been exceeded by one or more variants' if flagged_cellular_variant_names.length.positive?
+
       size_report = "# App Thinning Size Report\n"
       size_report << "### Size limit = #{size_limit} #{limit_unit.upcase}\n\n"
-      size_report << "| Under Limit | Variant | App Size - Compressed | App Size - Uncompressed | ODR Size - Compressed | ODR Size - Uncompressed |\n"
-      size_report << "| :-: | :-: | :-: | :-: | :-: | :-: |\n"
+      size_report << "| Under Limit | Variant | Cellular Friendly | App Size - Compressed | App Size - Uncompressed | ODR Size - Compressed | ODR Size - Uncompressed |\n"
+      size_report << "| :-: | :-: | :-: | :-: | :-: | :-: | :-:|\n"
 
       flagged_variants_set = flagged_variant_names.to_set
+      flagged_cellular_variants_set = flagged_cellular_variant_names.to_set
 
       variants.each do |variant|
         is_violating = flagged_variants_set.include?(variant.variant) ? '❌' : '✅'
+        is_cellular_friendly = flagged_cellular_variants_set.include?(variant.variant) ? '❌' : '✅'
         app_size_compressed = "#{variant.app_size.compressed.value} #{variant.app_size.compressed.unit}"
         app_size_uncompressed = "#{variant.app_size.uncompressed.value} #{variant.app_size.uncompressed.unit}"
         odr_size_compressed = "#{variant.on_demand_resources_size.compressed.value} #{variant.on_demand_resources_size.compressed.unit}"
         odr_size_uncompressed = "#{variant.on_demand_resources_size.uncompressed.value} #{variant.on_demand_resources_size.uncompressed.unit}"
 
-        size_report << "#{is_violating} | #{variant.variant} | #{app_size_compressed} | #{app_size_uncompressed} | #{odr_size_compressed} | #{odr_size_uncompressed} |\n"
+        size_report << "#{is_violating} | #{variant.variant} | #{is_cellular_friendly} | #{app_size_compressed} | #{app_size_uncompressed} | #{odr_size_compressed} | #{odr_size_uncompressed} |\n"
       end
 
       markdown size_report
