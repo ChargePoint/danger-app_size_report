@@ -15,26 +15,24 @@ module Danger
   # A valid App Thinning Size Report must be passed to the plugin
   # for accurate functionality in case of iOS.
   #
-  # @example Report iOS app size violations if one or more App variants
-  # exceed 4GB.
+  # @example Report iOS app size violations if one or more App variants exceed 4GB.
   #
   #          report_path = "/Path/to/AppSize/Report.txt"
   #          app_size_report.flag_ios_violations(
   #             report_path,
   #             build_type: 'App',
-  #             size_limit: 4,
+  #             limit_size: 4,
   #             limit_unit: 'GB',
   #             fail_on_warning: false
   #          )
   #
-  # @example Report iOS app size violations if one or more App Clip variants
-  # exceed 8MB.
+  # @example Report iOS app size violations if one or more App Clip variants exceed 8MB.
   #
   #          report_path = "/Path/to/AppSize/Report.txt"
   #          app_size_report.flag_ios_violations(
   #             report_path,
   #             build_type: 'Clip',
-  #             size_limit: 8,
+  #             limit_size: 8,
   #             limit_unit: 'MB',
   #             fail_on_warning: false
   #          )
@@ -45,7 +43,7 @@ module Danger
   #          app_size_report.flag_ios_violations(
   #             report_path,
   #             build_type: 'Clip',
-  #             size_limit: 8,
+  #             limit_size: 8,
   #             limit_unit: 'MB',
   #             fail_on_warning: true
   #          )
@@ -71,7 +69,7 @@ module Danger
   #             screen_densities: ["MDPI", "HDPI", "XHDPI", "XXHDPI", "XXXHDPI"],
   #             languages: ["en", "de", "da", "es", "fr", "it", "nb", "nl", "sv"],
   #             build_type: 'App',
-  #             size_limit: 14,
+  #             limit_size: 14,
   #             limit_unit: 'MB',
   #             fail_on_warning: false
   #          )
@@ -92,7 +90,7 @@ module Danger
   #             screen_densities: ["MDPI", "HDPI", "XHDPI", "XXHDPI", "XXXHDPI"],
   #             languages: ["en", "de", "da", "es", "fr", "it", "nb", "nl", "sv"],
   #             build_type: 'Instant',
-  #             size_limit: 4,
+  #             limit_size: 4,
   #             limit_unit: 'MB',
   #             fail_on_warning: false
   #          )
@@ -113,7 +111,7 @@ module Danger
   #             screen_densities: ["MDPI", "HDPI", "XHDPI", "XXHDPI", "XXXHDPI"],
   #             languages: ["en", "de", "da", "es", "fr", "it", "nb", "nl", "sv"],
   #             build_type: 'Instant',
-  #             size_limit: 4,
+  #             limit_size: 4,
   #             limit_unit: 'MB',
   #             fail_on_warning: true
   #          )
@@ -123,80 +121,101 @@ module Danger
   #
   class DangerAppSizeReport < Plugin
     # Reports IOS app size violations given a valid App Thinning Size Report.
-    # @param [String, required] report_path
-    #        Path to valid App Thinning Size Report text file.
-    # @param [String, optional] build_type
-    #        Specify whether the report corresponds to an App or an App Clip.
-    #        Default: 'App'
-    #        Supported values: 'App', 'Clip'
-    # @param [Numeric, optional] size_limit
-    #        Specify the app size limit.
-    #        Default: 4
-    # @param [String, optional] limit_unit
-    #        Specific the unit for the given size limit.
-    #        Default: 'GB'
-    #        Supported values: 'KB', 'MB', 'GB'
-    # @param [Boolean, optional] fail_on_warning
-    #        Specify whether the PR should fail if one or more app variants
-    #        exceed the given size limit. By default, the plugin issues
-    #        a warning in this case.
-    #        Default: 'false'
+    # @overload flag_ios_violations(report_path, build_type, limit_size, limit_unit, fail_on_warning)
+    #   @param [String, required] report_path
+    #         Path to valid App Thinning Size Report text file.
+    #   @param [String, optional] build_type
+    #         Specify whether the report corresponds to an App or an App Clip.
+    #         Default: 'App'
+    #         Supported values: 'App', 'Clip'
+    #   @param [Numeric, optional] limit_size
+    #         Specify the app size limit.
+    #         Default: 4
+    #   @param [String, optional] limit_unit
+    #         Specific the unit for the given size limit.
+    #         Default: 'GB'
+    #         Supported values: 'KB', 'MB', 'GB'
+    #   @param [Boolean, optional] fail_on_warning
+    #         Specify whether the PR should fail if one or more app variants
+    #         exceed the given size limit. By default, the plugin issues
+    #         a warning in this case.
+    #         Default: 'false'
     # @return   [void]
     #
-    def flag_ios_violations(report_path, build_type: 'App', size_limit: 4, limit_unit: 'GB', fail_on_warning: false)
+    def flag_ios_violations(report_path, **kargs)
+      supported_kargs = %i[build_type limit_size limit_unit size_limit fail_on_warning]
+
+      # Identify any unsupported arguments passed to method
+      unsupported_kargs = kargs.keys - supported_kargs
+
+      raise ArgumentError, "The argument '#{unsupported_kargs[0]}' is not supported by flag_ios_violations" if unsupported_kargs.count == 1
+
+      raise ArgumentError, "The arguments #{unsupported_kargs} are not supported by flag_ios_violations" if unsupported_kargs.count > 1
+
+      # Set up optional arguments with default values if needed
+      build_type = kargs[:build_type] || 'App'
+      limit_size = kargs[:limit_size] || kargs[:size_limit] || 4
+      limit_unit = kargs[:limit_unit] || 'GB'
+      fail_on_warning = kargs[:fail_on_warning] || false
+
       report_text = File.read(report_path)
       variants = ReportParser.parse(report_text)
 
       raise ArgumentError, "The 'build_type' argument only accepts the values \"App\" and \"Clip\"" unless %w[App Clip].include? build_type
 
-      raise ArgumentError, "The 'size_limit' argument only accepts numeric values" unless size_limit.is_a? Numeric
+      if kargs[:limit_size]
+        raise ArgumentError, "The 'limit_size' argument only accepts numeric values" unless limit_size.is_a? Numeric
+      elsif kargs[:size_limit]
+        raise ArgumentError, "The 'size_limit' argument only accepts numeric values" unless limit_size.is_a? Numeric
+      end
 
       limit_unit.upcase!
       raise ArgumentError, "The 'build_type' argument only accepts the values \"KB\", \"MB\" and \"GB\"" unless %w[KB MB GB].include? limit_unit
 
       raise ArgumentError, "The 'fail_on_warning' argument only accepts the values 'true' and 'false'" unless [true, false].include? fail_on_warning
 
-      generate_size_report_markdown(variants, build_type, size_limit, limit_unit, fail_on_warning)
+      generate_size_report_markdown(variants, build_type, limit_size, limit_unit, fail_on_warning)
       generate_variant_descriptors_markdown(variants)
       generate_ads_label_markdown
     end
 
     # Reports Android app size violations given a valid AAB.
-    # @param [String, required] aab_path
-    #        Path to valid AAB file.
-    # @param [String, required] ks_path
-    #        Path to valid signing key file.
-    # @param [String, required] ks_alias
-    #        Alias of signing key
-    # @param [String, required] ks_password
-    #        Password of signing key
-    # @param [String, required] ks_alias_password
-    #        Alias Password of signing key.
-    # @param [Array, optional] screen_densities
-    #        Array of screen densities to check APK size
-    #        Default: ["MDPI", "HDPI", "XHDPI", "XXHDPI", "XXXHDPI"]
-    # @param [Array, optional] languages
-    #        Array of languages to check APK size
-    #        Default: ["en"]
-    # @param [String, optional] build_type
-    #        Specify whether the report corresponds to an App, Instant.
-    #        Default: 'App'
-    #        Supported values: 'App', 'Instant'
-    # @param [Numeric, optional] size_limit
-    #        Specify the app size limit.
-    #        Default: 150
-    # @param [String, optional] limit_unit
-    #        Specific the unit for the given size limit.
-    #        Default: 'MB'
-    #        Supported values: 'KB', 'MB', 'GB'
-    # @param [Boolean, optional] fail_on_warning
-    #        Specify whether the PR should fail if one or more app variants
-    #        exceed the given size limit. By default, the plugin issues
-    #        a warning in this case.
-    #        Default: 'false'
+    # @overload flag_android_violations(aab_path, ks_path, ks_alias, ks_password, ks_alias_password, screen_densities, languages, build_type, limit_size, size_limit, limit_unit, fail_on_warning)
+    #   @param [String, required] aab_path
+    #         Path to valid AAB file.
+    #   @param [String, required] ks_path
+    #         Path to valid signing key file.
+    #   @param [String, required] ks_alias
+    #         Alias of signing key
+    #   @param [String, required] ks_password
+    #         Password of signing key
+    #   @param [String, required] ks_alias_password
+    #         Alias Password of signing key.
+    #   @param [Array, optional] screen_densities
+    #         Array of screen densities to check APK size
+    #         Default: ["MDPI", "HDPI", "XHDPI", "XXHDPI", "XXXHDPI"]
+    #   @param [Array, optional] languages
+    #         Array of languages to check APK size
+    #         Default: ["en"]
+    #   @param [String, optional] build_type
+    #         Specify whether the report corresponds to an App, Instant.
+    #         Default: 'App'
+    #         Supported values: 'App', 'Instant'
+    #   @param [Numeric, optional] limit_size
+    #         Specify the app size limit.
+    #         Default: 150
+    #   @param [String, optional] limit_unit
+    #         Specific the unit for the given size limit.
+    #         Default: 'MB'
+    #         Supported values: 'KB', 'MB', 'GB'
+    #   @param [Boolean, optional] fail_on_warning
+    #         Specify whether the PR should fail if one or more app variants
+    #         exceed the given size limit. By default, the plugin issues
+    #         a warning in this case.
+    #         Default: 'false'
     # @return   [void]
     #
-    def flag_android_violations(aab_path, ks_path, ks_alias, ks_password, ks_alias_password, screen_densities: %w[MDPI HDPI XHDPI XXHDPI XXXHDPI], languages: ['en'], build_type: 'App', size_limit: 150, limit_unit: 'MB', fail_on_warning: false)
+    def flag_android_violations(aab_path, ks_path, ks_alias, ks_password, ks_alias_password, **kargs)
       project_root = Dir.pwd
       temp_path = "#{project_root}/temp"
       apks_path = "#{temp_path}/output.apks"
@@ -205,9 +224,28 @@ module Danger
       bundletool_version = '1.8.2'
       variants_limit = 25
 
+      supported_kargs = %i[screen_densities languages build_type limit_size size_limit limit_unit fail_on_warning]
+      unsupported_kargs = kargs.keys - supported_kargs
+
+      raise ArgumentError, "The argument #{unsupported_kargs[0]} is not supported by flag_android_violations" if unsupported_kargs.count == 1
+
+      raise ArgumentError, "The arguments #{unsupported_kargs} are not supported by flag_android_violations" if unsupported_kargs.count > 1
+
+      # Set up optional arguments with default values if needed
+      screen_densities = kargs[:screen_densities] || %w[MDPI HDPI XHDPI XXHDPI XXXHDPI]
+      languages = kargs[:languages] || ['en']
+      build_type = kargs[:build_type] || 'App'
+      limit_size = kargs[:limit_size] || kargs[:size_limit] || 150
+      limit_unit = kargs[:limit_unit] || 'MB'
+      fail_on_warning = kargs[:fail_on_warning] || false
+
       raise ArgumentError, "The 'build_type' argument only accepts the values \"App\" and \"Instant\"" unless %w[App Instant].include? build_type
 
-      raise ArgumentError, "The 'size_limit' argument only accepts numeric values" unless size_limit.is_a? Numeric
+      if kargs[:limit_size]
+        raise ArgumentError, "The 'limit_size' arguments only accepts numeric values" unless limit_size.is_a? Numeric
+      elsif kargs[:size_limit]
+        raise ArgumentError, "The 'size_limit' argument only accepts numeric values" unless limit_size.is_a? Numeric
+      end
 
       limit_unit.upcase!
       raise ArgumentError, "The 'limit_unit' argument only accepts the values \"KB\", \"MB\" and \"GB\"" unless %w[KB MB GB].include? limit_unit
@@ -229,9 +267,8 @@ module Danger
 
       clean_temp!(temp_path)
 
-      generate_android_size_report_markdown(sorted_sizes, build_type, size_limit, limit_unit, fail_on_warning,
+      generate_android_size_report_markdown(sorted_sizes, build_type, limit_size, limit_unit, fail_on_warning,
                                             variants_limit)
-      generate_ads_label_markdown
     end
 
     # Returns a JSON string representation of the given App Thinning Size Report.
