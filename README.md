@@ -1,5 +1,7 @@
 # danger-app_size_report
 
+[![Build Status](https://app.bitrise.io/app/2f93240761558c73/status.svg?token=RAmtNFYZtsHZGwu04sEgPA&branch=main)](https://app.bitrise.io/app/2f93240761558c73)
+
 A [Danger](https://github.com/danger/danger) plugin for reporting iOS and Android app size violations.
 
 ## Installation
