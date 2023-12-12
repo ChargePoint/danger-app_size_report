@@ -36,7 +36,7 @@ The list of variants with their sizes and any violations will be displayed in th
 - `report_path` [String, required] Path to valid App Thinning Size Report text file.
 - `build_type` [String, optional] [Default: 'App'] Specify whether the report corresponds to an App or an App Clip.
   - Supported values: 'App', 'Clip'
-- `limit_size` [Numeric, optional] [Default: 4] Specify the app size limit. If the build type is set to 'Clip' and the specified app size limit exceeds 10 MB, the 10 MB limit will be enforced to meet Apple's App Clip size requirements.
+- `limit_size` [Numeric, optional] [Default: 4] Specify the app size limit. If the build type is set to 'Clip' and the specified app size limit exceeds 15 MB, the 15 MB limit will be enforced to meet Apple's App Clip size requirements.
 - `limit_unit` [String, optional] [Default: 'GB'] Specific the unit for the given size limit.
   - Supported values: 'KB', 'MB', 'GB'
 - `fail_on_warning` [Boolean, optional] [Default: false] Specify whether the PR should fail if one or more app variants exceed the given size limit. By default, the plugin issues a warning in this case.
