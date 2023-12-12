@@ -384,11 +384,11 @@ module Danger
       limit_size = MemorySize.new("#{size_limit}#{limit_unit}")
       cellular_limit_size = MemorySize.new('200 MB')
 
-      if build_type == 'Clip' && limit_size.megabytes > 10
-        message "The size limit was set to 10 MB as the given limit of #{size_limit} #{limit_unit} exceeds Apple's App Clip size restrictions"
-        size_limit = 10
+      if build_type == 'Clip' && limit_size.megabytes > 15
+        message "The size limit was set to 15 MB as the given limit of #{size_limit} #{limit_unit} exceeds Apple's App Clip size restrictions"
+        size_limit = 15
         limit_unit = 'MB'
-        limit_size.kilobytes = 10 * 1024
+        limit_size.kilobytes = 15 * 1024
       elsif build_type == 'App' && limit_size.gigabytes > 4
         message "The size limit was set to 4 GB as the given limit of #{size_limit} #{limit_unit} exceeds Apple's App size restrictions"
         size_limit = 4

@@ -30,7 +30,7 @@ module Danger
           limit_unit: 'MB'
         )
 
-        expect(@dangerfile.status_report[:warnings]).to eq(['The size limit of 10 MB has been exceeded by one or more variants'])
+        expect(@dangerfile.status_report[:warnings]).to eq(['The size limit of 12 MB has been exceeded by one or more variants'])
       end
 
       it 'Generates IOS App Size Danger Report for App' do
